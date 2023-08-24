@@ -1,6 +1,6 @@
 import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EDITOR_FEATURE, EditorFeature } from './editor-feature';
-import { BehaviorSubject, from } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ParagraphOptions } from '@tiptap/extension-paragraph';
 
 @Directive({
@@ -30,5 +30,5 @@ export class CdmParagraphDirective implements EditorFeature, OnChanges {
   config = new BehaviorSubject<Partial<ParagraphOptions> | null>(null);
 
   extension = () =>
-    from(import('@tiptap/extension-paragraph').then((m) => m.Paragraph));
+    import('@tiptap/extension-paragraph').then((m) => m.Paragraph);
 }

@@ -1,6 +1,6 @@
 import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EDITOR_FEATURE, EditorFeature } from './editor-feature';
-import { BehaviorSubject, from } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { HeadingOptions } from '@tiptap/extension-heading';
 
 @Directive({
@@ -27,6 +27,5 @@ export class CdmHeadingDirective implements EditorFeature, OnChanges {
   enabled = new BehaviorSubject(false);
   config = new BehaviorSubject({});
 
-  extension = () =>
-    from(import('@tiptap/extension-heading').then((m) => m.Heading));
+  extension = () => import('@tiptap/extension-heading').then((m) => m.Heading);
 }
