@@ -1,7 +1,13 @@
-import { DestroyRef, Injectable, inject } from '@angular/core';
+import {
+  DestroyRef,
+  Inject,
+  Injectable,
+  Optional,
+  inject,
+} from '@angular/core';
 import { Editor } from '@tiptap/core';
 import { EDITOR_FEATURE, EditorFeature } from './editor-feature/editor-feature';
-import { Observable, combineLatest, from, map, switchMap, tap } from 'rxjs';
+import { Observable, combineLatest, filter, map, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import StarterKit from '@tiptap/starter-kit';
 
@@ -11,26 +17,34 @@ export class EditorService {
 
   features = inject<EditorFeature[]>(EDITOR_FEATURE, { optional: true }) || [];
 
-  // TODO: Introduce type safety for extension
-  extensions$: Observable<any[]> = combineLatest([
-    ...this.features.map(({ enabled, extension, config }) =>
-      enabled.pipe(
-        map((enabled) =>
-          enabled
-            ? extension().then((m) => m.configure(config))
-            : Promise.resolve()
-        )
-      )
-    ),
-  ]).pipe(
-    switchMap((extensionPromises) =>
-      from(Promise.all(extensionPromises)).pipe(
-        // Only return truethy extensions
-        map((extensions) => extensions.filter(Boolean)),
-        tap((extensions) => console.log(extensions))
-      )
+  // Maybe if [cdmFeature]="false" then this means extension should be disabled
+  private features$ = this.features.map(({ enabled, extension, config }) =>
+    enabled.pipe(
+      filter((enabled) => enabled),
+      switchMap(() => extension()),
+      map((extension) => extension.configure(config || {}))
     )
   );
+
+  // TODO: Introduce type safety for extension
+  // Doesn't emit if one of the extensions is disabled
+  extensions$: Observable<any> = combineLatest(this.features$).pipe();
+  // extensions$: Observable<any[]> = combineLatest([
+  //   ...this.features.map(({ enabled, extension, config }) =>
+  //     enabled.pipe(
+  //       switchMap((enabled) => (enabled ? extension() : EMPTY)),
+  //       tap((extension) => console.log(extension.configure({})))
+  //     )
+  //   ),
+  // ]).pipe(
+  //   switchMap((extensionPromises) =>
+  //     from(Promise.all(extensionPromises)).pipe(
+  //       // Only return truethy extensions
+  //       map((extensions) => extensions.filter(Boolean)),
+  //       tap((extensions) => console.log(extensions))
+  //     )
+  //   )
+  // );
 
   getEditor(destroyRef: DestroyRef): Editor {
     console.log(this.features);
@@ -47,6 +61,7 @@ export class EditorService {
     return this.extensions$
       .pipe(
         takeUntilDestroyed(destroyRef),
+        tap((extensions) => console.log('Final result:', extensions)),
         tap((extensions) => (this.editor.options.extensions = [...extensions]))
       )
       .subscribe();

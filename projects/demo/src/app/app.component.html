@@ -1,2 +1,6 @@
-<cdm-tiptap-editor [formControl]="content"></cdm-tiptap-editor>
+<cdm-tiptap-editor
+  [formControl]="content"
+  [cdmHeading]="{ levels: [1, 2, 3] }"
+  cdmParagraph
+></cdm-tiptap-editor>
 <div style="color: red" *ngIf="content.invalid">Invalid!</div>

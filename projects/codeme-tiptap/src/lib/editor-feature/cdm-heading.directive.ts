@@ -1,6 +1,6 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EDITOR_FEATURE, EditorFeature } from './editor-feature';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, from } from 'rxjs';
 import { HeadingOptions } from '@tiptap/extension-heading';
 
 @Directive({
@@ -15,15 +15,18 @@ import { HeadingOptions } from '@tiptap/extension-heading';
     },
   ],
 })
-export class CdmHeadingDirective implements EditorFeature {
-  @Input() set cdmHeading(options: Partial<HeadingOptions>) {
-    if (options) this.config.next(options);
-    this.enabled.next(true);
-    console.log('enabled and configured heading extension');
+export class CdmHeadingDirective implements EditorFeature, OnChanges {
+  @Input() cdmHeading!: Partial<HeadingOptions> | '';
+
+  ngOnChanges({ cdmHeading }: SimpleChanges): void {
+    if (cdmHeading.currentValue) {
+      this.config.next(cdmHeading.currentValue);
+    }
   }
 
-  enabled = new BehaviorSubject(true);
+  enabled = new BehaviorSubject(false);
   config = new BehaviorSubject({});
 
-  extension = () => import('@tiptap/extension-heading');
+  extension = () =>
+    from(import('@tiptap/extension-heading').then((m) => m.Heading));
 }
