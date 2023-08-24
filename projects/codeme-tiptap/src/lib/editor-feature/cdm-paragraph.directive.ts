@@ -15,18 +15,13 @@ import { ParagraphOptions } from '@tiptap/extension-paragraph';
     },
   ],
 })
-export class CdmParagraphDirective implements EditorFeature, OnChanges {
-  // Can use setter with param type <SomeOptions | ''>
-  @Input() cdmParagraph!: Partial<ParagraphOptions> | '';
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const { cdmParagraph } = changes;
-    if (cdmParagraph.currentValue) {
-      this.config.next(cdmParagraph.currentValue);
-    }
+export class CdmParagraphDirective implements EditorFeature {
+  @Input() set cdmParagraph(config: Partial<ParagraphOptions> | '' | false) {
+    this.enabled.next(config !== false);
+    this.config.next(config || null);
   }
 
-  enabled = new BehaviorSubject(true);
+  enabled = new BehaviorSubject(false);
   config = new BehaviorSubject<Partial<ParagraphOptions> | null>(null);
 
   extension = () =>

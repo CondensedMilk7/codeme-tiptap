@@ -1,4 +1,4 @@
-import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, Input } from '@angular/core';
 import { EDITOR_FEATURE, EditorFeature } from './editor-feature';
 import { BehaviorSubject } from 'rxjs';
 import { HeadingOptions } from '@tiptap/extension-heading';
@@ -15,17 +15,14 @@ import { HeadingOptions } from '@tiptap/extension-heading';
     },
   ],
 })
-export class CdmHeadingDirective implements EditorFeature, OnChanges {
-  @Input() cdmHeading!: Partial<HeadingOptions> | '';
-
-  ngOnChanges({ cdmHeading }: SimpleChanges): void {
-    if (cdmHeading.currentValue) {
-      this.config.next(cdmHeading.currentValue);
-    }
+export class CdmHeadingDirective implements EditorFeature {
+  @Input() set cdmHeading(config: Partial<HeadingOptions> | '' | false) {
+    this.enabled.next(config !== false);
+    this.config.next(config || null);
   }
 
   enabled = new BehaviorSubject(false);
-  config = new BehaviorSubject({});
+  config = new BehaviorSubject<Partial<HeadingOptions> | null>(null);
 
   extension = () => import('@tiptap/extension-heading').then((m) => m.Heading);
 }

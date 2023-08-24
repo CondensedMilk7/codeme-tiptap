@@ -1,21 +1,7 @@
-import {
-  DestroyRef,
-  Inject,
-  Injectable,
-  Optional,
-  inject,
-} from '@angular/core';
+import { Injectable, DestroyRef, inject } from '@angular/core';
 import { Editor } from '@tiptap/core';
 import { EDITOR_FEATURE, EditorFeature } from './editor-feature/editor-feature';
-import {
-  Observable,
-  combineLatest,
-  filter,
-  from,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { Observable, combineLatest, from, map, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import StarterKit from '@tiptap/starter-kit';
 
@@ -25,12 +11,11 @@ export class EditorService {
 
   features = inject<EditorFeature[]>(EDITOR_FEATURE, { optional: true }) || [];
 
-  // Maybe if [cdmFeature]="false" then this means extension should be disabled
   private features$ = this.features.map(({ enabled, extension, config }) =>
-    enabled.pipe(
-      switchMap((enabled) =>
+    combineLatest([enabled, config]).pipe(
+      switchMap(([enabled, cfg]) =>
         enabled
-          ? from(extension()).pipe(map((ext) => ext.configure(config || {})))
+          ? from(extension()).pipe(map((ext) => ext.configure(cfg || {})))
           : Promise.resolve()
       )
     )
@@ -42,7 +27,6 @@ export class EditorService {
   );
 
   getEditor(destroyRef: DestroyRef): Editor {
-    console.log(this.features);
     this.editor = new Editor({
       extensions: [StarterKit],
     });
@@ -56,7 +40,7 @@ export class EditorService {
     return this.extensions$
       .pipe(
         takeUntilDestroyed(destroyRef),
-        tap((extensions) => console.log('Final result:', extensions)),
+        tap((extensions) => console.log('Registered extensions: ', extensions)),
         tap((extensions) => (this.editor.options.extensions = [...extensions]))
       )
       .subscribe();
