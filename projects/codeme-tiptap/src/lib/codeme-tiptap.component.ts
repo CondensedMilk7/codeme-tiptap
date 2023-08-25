@@ -1,5 +1,4 @@
 import { Component, DestroyRef, forwardRef, inject } from '@angular/core';
-
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EditorService } from './editor.service';
 
@@ -14,11 +13,10 @@ import { EditorService } from './editor.service';
     },
   ],
   template: `
-    <cdm-editor-toolbar [editor]="editor"></cdm-editor-toolbar>
+    <cdm-editor-toolbar></cdm-editor-toolbar>
     <tiptap-editor
       [editor]="editor"
       [ngModel]="value"
-      [cdmHeading]="{ levels: [1, 2, 3] }"
       (ngModelChange)="setValue($event)"
     ></tiptap-editor>
   `,

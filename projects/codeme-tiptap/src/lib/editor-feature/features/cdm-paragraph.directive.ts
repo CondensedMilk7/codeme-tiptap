@@ -1,12 +1,11 @@
-import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { EDITOR_FEATURE, EditorFeature } from './editor-feature';
+import { Directive, Input } from '@angular/core';
+import { EDITOR_FEATURE, EditorFeature } from '../editor-feature';
 import { BehaviorSubject } from 'rxjs';
 import { ParagraphOptions } from '@tiptap/extension-paragraph';
 
 @Directive({
   standalone: true,
-  selector:
-    'cdm-tiptap-editor[cdmParagraph], tiptap-editor[cdmParagraph], div#editor[cdmParagraph]',
+  selector: 'cdm-tiptap-editor[cdmParagraph], tiptap-editor[cdmParagraph]',
   providers: [
     {
       provide: EDITOR_FEATURE,
@@ -15,7 +14,7 @@ import { ParagraphOptions } from '@tiptap/extension-paragraph';
     },
   ],
 })
-export class CdmParagraphDirective implements EditorFeature {
+export class CdmParagraphDirective implements EditorFeature<ParagraphOptions> {
   @Input() set cdmParagraph(config: Partial<ParagraphOptions> | '' | false) {
     this.enabled.next(config !== false);
     this.config.next(config || null);

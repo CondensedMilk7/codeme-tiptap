@@ -4,6 +4,9 @@ dependencies:
   '@angular/animations':
     specifier: ^16.1.0
     version: 16.1.0(@angular/core@16.1.0)
+  '@angular/cdk':
+    specifier: ^16.2.1
+    version: 16.2.1(@angular/common@16.1.0)(@angular/core@16.1.0)(rxjs@7.8.0)
   '@angular/common':
     specifier: ^16.1.0
     version: 16.1.0(@angular/core@16.1.0)(rxjs@7.8.0)
@@ -100,6 +103,9 @@ dependencies:
   ngx-image-cropper:
     specifier: ^7.0.1
     version: 7.0.1(@angular/common@16.1.0)(@angular/core@16.1.0)
+  portal:
+    specifier: link:@angular/cdk/portal
+    version: link:@angular/cdk/portal
   rxjs:
     specifier: ~7.8.0
     version: 7.8.0
@@ -383,7 +389,7 @@ packages:
       '@angular/common': 16.1.0(@angular/core@16.1.0)(rxjs@7.8.0)
       '@angular/core': 16.1.0(rxjs@7.8.0)(zone.js@0.13.0)
       rxjs: 7.8.0
-      tslib: 2.3.0
+      tslib: 2.5.3
     optionalDependencies:
       parse5: 7.1.2
     dev: false
@@ -4849,7 +4855,7 @@ packages:
   /injection-js@2.4.0:
     resolution: {integrity: sha512-6jiJt0tCAo9zjHbcwLiPL+IuNe9SQ6a9g0PEzafThW3fOQi0mrmiJGBJvDD6tmhPh8cQHIQtCOrJuBfQME4kPA==}
     dependencies:
-      tslib: 2.3.0
+      tslib: 2.5.3
     dev: true
 
   /inquirer@8.2.4:
@@ -5268,7 +5274,7 @@ packages:
     dependencies:
       copy-anything: 2.0.6
       parse-node-version: 1.0.1
-      tslib: 2.3.0
+      tslib: 2.5.3
     optionalDependencies:
       errno: 0.1.8
       graceful-fs: 4.2.11
@@ -5288,7 +5294,7 @@ packages:
     dependencies:
       copy-anything: 2.0.6
       parse-node-version: 1.0.1
-      tslib: 2.3.0
+      tslib: 2.5.3
     optionalDependencies:
       errno: 0.1.8
       graceful-fs: 4.2.11
@@ -6817,7 +6823,7 @@ packages:
   /rxjs@7.8.1:
     resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
     dependencies:
-      tslib: 2.3.0
+      tslib: 2.5.3
     dev: true
 
   /safe-buffer@5.1.2:
@@ -7450,7 +7456,6 @@ packages:
 
   /tslib@2.5.3:
     resolution: {integrity: sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w==}
-    dev: true
 
   /tuf-js@1.1.7:
     resolution: {integrity: sha512-i3P9Kgw3ytjELUfpuKVDNBJvk4u5bXL6gskv572mcevPbSKCV3zt3djhmlEQ65yERjIbOSncy7U4cQJaB1CBCg==}
