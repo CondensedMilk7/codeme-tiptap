@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { EditorService } from '../editor.service';
 
 @Component({
@@ -12,6 +12,7 @@ import { EditorService } from '../editor.service';
     </div>
   `,
   styles: [``],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorToolbarComponent {
   editorService = inject(EditorService);

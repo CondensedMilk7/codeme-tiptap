@@ -1,6 +1,15 @@
-import { Component, DestroyRef, forwardRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  forwardRef,
+  inject,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EditorService } from './editor.service';
+import { BehaviorSubject } from 'rxjs';
+import { Editor } from '@tiptap/core';
+import StarterKit from '@tiptap/starter-kit';
 
 @Component({
   selector: 'cdm-tiptap-editor',
@@ -15,20 +24,26 @@ import { EditorService } from './editor.service';
   template: `
     <cdm-editor-toolbar></cdm-editor-toolbar>
     <tiptap-editor
-      [editor]="editor"
+      [editor]="(editor$ | async) ?? fallbackEditor()"
       [ngModel]="value"
       (ngModelChange)="setValue($event)"
     ></tiptap-editor>
   `,
   styles: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CodemeTiptapComponent implements ControlValueAccessor {
   editorService = inject(EditorService);
-  destroyRef = inject(DestroyRef);
 
+  // TODO: make bare editor use no extensions at all.
+  // !! ngx-tiptap-editor throws if no extensions are provided
   value = '';
 
-  editor = this.editorService.getEditor(this.destroyRef);
+  editor$ = this.editorService.editor$ as BehaviorSubject<Editor>;
+
+  fallbackEditor() {
+    return new Editor({ extensions: [StarterKit] });
+  }
 
   setValue(value: string) {
     this.value = value;

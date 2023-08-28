@@ -1,6 +1,12 @@
-import { Component, Directive, Input, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Directive,
+  Input,
+  inject,
+} from '@angular/core';
 import { EDITOR_FEATURE, EditorFeature } from '../editor-feature';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { ParagraphOptions } from '@tiptap/extension-paragraph';
 import Table, { TableOptions } from '@tiptap/extension-table';
 import TableRow, { TableRowOptions } from '@tiptap/extension-table-row';
@@ -64,9 +70,10 @@ export class CdmTableDirective implements EditorFeature<CombinedTableOptions> {
   selector: 'cdm-table-button',
   template: ` <button (click)="onClick()">Table</button> `,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CdmTableButton {
-  editor = inject(EditorService).editor;
+  editor$ = inject(EditorService).editor$;
 
   constructor(
     private modalService: NzModalService,
@@ -76,9 +83,9 @@ export class CdmTableButton {
   onClick() {
     this.applyTable();
 
-    console.log(Object.keys(this.editor.chain()));
+    // console.log(Object.keys(this.editor.chain()));
 
-    console.log(this.editor.extensionManager.extensions);
+    // console.log(this.editor.extensionManager.extensions);
   }
 
   applyTable(): void {
@@ -92,11 +99,14 @@ export class CdmTableButton {
       if (tableData) {
         const { rows, cols } = tableData;
         if (rows > 0 && cols > 0) {
-          this.editor
-            .chain()
-            .focus()
-            .insertTable({ rows: rows, cols: cols, withHeaderRow: true })
-            .run();
+          this.editor$.pipe(take(1)).subscribe((editor) => {
+            console.log('table', editor.chain().focus());
+            editor
+              .chain()
+              .focus()
+              .insertTable({ rows: rows, cols: cols, withHeaderRow: true })
+              .run();
+          });
         } else {
           this.messageService.create(
             'error',
