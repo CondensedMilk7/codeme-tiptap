@@ -1,7 +1,7 @@
 import { Injectable, DestroyRef, inject } from '@angular/core';
 import { Editor } from '@tiptap/core';
 import { EDITOR_FEATURE, EditorFeature } from './editor-feature/editor-feature';
-import { Observable, combineLatest, from, map, switchMap, tap } from 'rxjs';
+import { Observable, combineLatest, from, map, of, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import StarterKit from '@tiptap/starter-kit';
 import { Portal } from '@angular/cdk/portal';
@@ -19,14 +19,23 @@ export class EditorService {
     combineLatest([enabled, config]).pipe(
       switchMap(([enabled, cfg]) =>
         enabled
-          ? from(extension()).pipe(map((ext) => ext.configure(cfg || {})))
-          : Promise.resolve()
+          ? from(extension()).pipe(
+              map((extArray) => {
+                if (Array.isArray(extArray)) {
+                  return extArray.map((ext) => ext.configure(cfg || {}));
+                }
+                return extArray.configure(cfg || {});
+              })
+            )
+          : of(null)
       )
     )
   );
 
   extensions$: Observable<any> = combineLatest(this.features$).pipe(
-    map((extensions) => extensions.filter(Boolean))
+    map((extensionsArray) => {
+      return extensionsArray.flat().filter(Boolean);
+    })
   );
 
   getEditor(destroyRef: DestroyRef): Editor {
