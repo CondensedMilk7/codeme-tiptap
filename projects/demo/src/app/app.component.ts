@@ -14,6 +14,7 @@ import { FormControl, Validators } from '@angular/forms';
       [formControl]="content"
       [cdmHeading]="{ levels: [1, 2, 3] }"
       [cdmParagraph]="paragraphEnabled ? '' : false"
+      [cdmTable]="{ resizable: true }"
     ></cdm-tiptap-editor>
     <div style="color: red" *ngIf="content.invalid">Invalid!</div>
   `,

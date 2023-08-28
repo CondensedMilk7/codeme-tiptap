@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { CdmHeadingDirective, CodemeTiptapModule } from 'codeme-tiptap';
+import {
+  CdmHeadingDirective,
+  CodemeTiptapModule,
+  CdmTableDirective,
+} from 'codeme-tiptap';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -12,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CodemeTiptapModule,
     ReactiveFormsModule,
     CdmHeadingDirective,
+    CdmTableDirective,
   ],
   providers: [],
   bootstrap: [AppComponent],
