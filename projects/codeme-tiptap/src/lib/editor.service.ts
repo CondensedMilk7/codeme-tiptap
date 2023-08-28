@@ -9,7 +9,7 @@ import { Portal } from '@angular/cdk/portal';
 
 @Injectable()
 export class EditorService {
-  editor!: Editor;
+  private editor!: Editor;
 
   private features =
     inject<EditorFeature[]>(EDITOR_FEATURE, { optional: true }) || [];
