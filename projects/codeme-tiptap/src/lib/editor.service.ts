@@ -36,14 +36,9 @@ export class EditorService {
     // features are filtered, so button cannot be undefined
     .map((feat) => feat.button as Portal<any>);
 
-  extensions$: Observable<(Node<any, any> | Node<any, any>)[]> = combineLatest(
-    this.features$
-  ).pipe(
+  extensions$: Observable<Node[]> = combineLatest(this.features$).pipe(
     map((extensionsArray) => {
-      return extensionsArray.flat().filter(Boolean) as (
-        | Node<any, any>
-        | Node<any, any>
-      )[];
+      return extensionsArray.flat().filter(Boolean) as Node[];
     })
   );
 

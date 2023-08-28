@@ -3,10 +3,12 @@ import { Node } from '@tiptap/core';
 import { Observable } from 'rxjs';
 import { Portal } from '@angular/cdk/portal';
 
-export abstract class EditorFeature<ConfigType = any> {
+export abstract class EditorFeature<ConfigType = any, StorageType = any> {
   abstract enabled: Observable<boolean>;
   abstract config: Observable<Partial<ConfigType> | null>;
-  abstract extension: () => Promise<Node<ConfigType, any> | Node<ConfigType, any>[]>;
+  abstract extension: () => Promise<
+    Node<ConfigType, StorageType> | Node<ConfigType, StorageType>[]
+  >;
   abstract button?: Portal<any>;
 }
 
