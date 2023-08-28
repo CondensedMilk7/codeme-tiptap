@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { EDITOR_FEATURE, EditorFeature } from '../editor-feature';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject, take, takeLast } from 'rxjs';
 import { HeadingOptions, Level } from '@tiptap/extension-heading';
 import { EditorService } from '../../editor.service';
 import { ComponentPortal } from '@angular/cdk/portal';
@@ -46,11 +46,11 @@ export class CdmHeadingDirective implements EditorFeature<HeadingOptions> {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CdmHeadingButton {
-  editor$ = inject(EditorService).editor$;
+  editorService = inject(EditorService);
 
   onClick(level: Level) {
-    this.editor$.pipe(take(1)).subscribe((editor) => {
-      editor.chain().focus().toggleHeading({ level }).run();
-    });
+    this.editorService.exec((editor) =>
+      editor.chain().focus().toggleHeading({ level }).run()
+    );
   }
 }

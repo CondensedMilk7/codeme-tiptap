@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { EDITOR_FEATURE, EditorFeature } from '../editor-feature';
 import { BehaviorSubject, take } from 'rxjs';
-import { ParagraphOptions } from '@tiptap/extension-paragraph';
 import Table, { TableOptions } from '@tiptap/extension-table';
 import TableRow, { TableRowOptions } from '@tiptap/extension-table-row';
 import TableCell, { TableCellOptions } from '@tiptap/extension-table-cell';
@@ -16,7 +15,6 @@ import TableHeader, {
 } from '@tiptap/extension-table-header';
 import { EditorService } from '../../editor.service';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Editor } from '@tiptap/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { TableModalComponent } from '../modals/table-modal.component';
@@ -73,7 +71,7 @@ export class CdmTableDirective implements EditorFeature<CombinedTableOptions> {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CdmTableButton {
-  editor$ = inject(EditorService).editor$;
+  editorService = inject(EditorService);
 
   constructor(
     private modalService: NzModalService,
@@ -82,10 +80,6 @@ export class CdmTableButton {
 
   onClick() {
     this.applyTable();
-
-    // console.log(Object.keys(this.editor.chain()));
-
-    // console.log(this.editor.extensionManager.extensions);
   }
 
   applyTable(): void {
@@ -99,7 +93,7 @@ export class CdmTableButton {
       if (tableData) {
         const { rows, cols } = tableData;
         if (rows > 0 && cols > 0) {
-          this.editor$.pipe(take(1)).subscribe((editor) => {
+          this.editorService.exec((editor) => {
             console.log('table', editor.chain().focus());
             editor
               .chain()

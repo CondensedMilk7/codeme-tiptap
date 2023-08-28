@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   forwardRef,
   inject,
 } from '@angular/core';
@@ -9,7 +8,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EditorService } from './editor.service';
 import { BehaviorSubject } from 'rxjs';
 import { Editor } from '@tiptap/core';
-import StarterKit from '@tiptap/starter-kit';
 
 @Component({
   selector: 'cdm-tiptap-editor',
@@ -22,12 +20,14 @@ import StarterKit from '@tiptap/starter-kit';
     },
   ],
   template: `
-    <cdm-editor-toolbar></cdm-editor-toolbar>
-    <tiptap-editor
-      [editor]="(editor$ | async) ?? fallbackEditor()"
-      [ngModel]="value"
-      (ngModelChange)="setValue($event)"
-    ></tiptap-editor>
+    <ng-container *ngIf="editor$ | async as editor">
+      <cdm-editor-toolbar></cdm-editor-toolbar>
+      <tiptap-editor
+        [editor]="editor"
+        [ngModel]="value"
+        (ngModelChange)="setValue($event)"
+      ></tiptap-editor>
+    </ng-container>
   `,
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,15 +35,9 @@ import StarterKit from '@tiptap/starter-kit';
 export class CodemeTiptapComponent implements ControlValueAccessor {
   editorService = inject(EditorService);
 
-  // TODO: make bare editor use no extensions at all.
-  // !! ngx-tiptap-editor throws if no extensions are provided
   value = '';
 
   editor$ = this.editorService.editor$ as BehaviorSubject<Editor>;
-
-  fallbackEditor() {
-    return new Editor({ extensions: [StarterKit] });
-  }
 
   setValue(value: string) {
     this.value = value;

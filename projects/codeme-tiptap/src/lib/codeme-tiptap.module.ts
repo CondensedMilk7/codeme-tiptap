@@ -14,9 +14,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableModalComponent } from './editor-feature/modals/table-modal.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -44,6 +42,5 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     CdmTableDirective,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
-
 })
 export class CodemeTiptapModule {}
