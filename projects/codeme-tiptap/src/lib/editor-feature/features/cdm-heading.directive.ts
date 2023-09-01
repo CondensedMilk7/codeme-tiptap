@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { EDITOR_FEATURE, EditorFeature } from '../editor-feature';
-import { BehaviorSubject, take, takeLast } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { HeadingOptions, Level } from '@tiptap/extension-heading';
 import { EditorService } from '../../editor.service';
 import { ComponentPortal } from '@angular/cdk/portal';

@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@angular/animations':
     specifier: ^16.1.0
@@ -110,6 +106,9 @@ dependencies:
   portal:
     specifier: link:@angular/cdk/portal
     version: link:@angular/cdk/portal
+  prosemirror-state:
+    specifier: ^1.4.3
+    version: 1.4.3
   rxjs:
     specifier: ~7.8.0
     version: 7.8.0
@@ -7976,3 +7975,7 @@ packages:
     resolution: {integrity: sha512-7m3hNNyswsdoDobCkYNAy5WiUulkMd3+fWaGT9ij6iq3Zr/IwJo4RMCYPSDjT+r7tnPErmY9sZpKhWQ8S5k6XQ==}
     dependencies:
       tslib: 2.3.0
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

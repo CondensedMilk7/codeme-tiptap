@@ -8,6 +8,7 @@ import {
   CdmTableDirective,
 } from 'codeme-tiptap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CdmImageDirective } from './image/cdm-image.directive';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     CdmHeadingDirective,
     CdmTableDirective,
+    CdmImageDirective,
   ],
   providers: [],
   bootstrap: [AppComponent],

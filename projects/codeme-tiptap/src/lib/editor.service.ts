@@ -9,7 +9,7 @@ import { Portal } from '@angular/cdk/portal';
 
 @Injectable()
 export class EditorService {
-  private editor!: Editor;
+  editor!: Editor;
 
   private features =
     inject<EditorFeature[]>(EDITOR_FEATURE, { optional: true }) || [];
@@ -49,6 +49,7 @@ export class EditorService {
           new Editor({ extensions: [Document, Text, Paragraph, ...extensions] })
       ),
       tap((editor) => {
+        console.log(this.features);
         this.editor = editor;
       })
     );
