@@ -1,15 +1,27 @@
-import { Injectable, inject } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Editor, Node } from '@tiptap/core';
 import { EDITOR_FEATURE, EditorFeature } from './editor-feature/editor-feature';
-import { Observable, combineLatest, from, map, of, switchMap, tap } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  combineLatest,
+  first,
+  from,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { Text } from '@tiptap/extension-text';
 import { Document } from '@tiptap/extension-document';
 import { Paragraph } from '@tiptap/extension-paragraph';
 import { Portal } from '@angular/cdk/portal';
+import { EditorState } from 'prosemirror-state'; // Adjust based on your editor's state management
 
 @Injectable()
 export class EditorService {
   editor!: Editor;
+  currentSelection: any = null;
 
   private features =
     inject<EditorFeature[]>(EDITOR_FEATURE, { optional: true }) || [];
@@ -56,6 +68,10 @@ export class EditorService {
   }
 
   exec(cb: (editor: Editor) => void) {
+    if (!this.editor) {
+      console.error('Editor not initialized');
+      return;
+    }
     cb(this.editor);
   }
 }

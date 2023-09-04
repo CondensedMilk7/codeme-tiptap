@@ -10,8 +10,10 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { CdmImageDirective } from './image/cdm-image.directive';
 
+import { EditorService } from 'projects/codeme-tiptap/src/public-api';
+import { TableClickDirective } from './table-click/cdm-table-click.directive';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, TableClickDirective],
   imports: [
     BrowserModule,
     CodemeTiptapModule,
@@ -20,7 +22,7 @@ import { CdmImageDirective } from './image/cdm-image.directive';
     CdmTableDirective,
     CdmImageDirective,
   ],
-  providers: [],
+  providers: [EditorService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

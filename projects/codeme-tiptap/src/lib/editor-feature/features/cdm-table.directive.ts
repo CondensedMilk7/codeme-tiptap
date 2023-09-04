@@ -2,8 +2,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   Directive,
+  EventEmitter,
   Input,
+  Output,
   inject,
+  Renderer2,
+  ElementRef,
 } from '@angular/core';
 import { EDITOR_FEATURE, EditorFeature } from '../editor-feature';
 import { BehaviorSubject, take } from 'rxjs';
@@ -13,11 +17,13 @@ import TableCell, { TableCellOptions } from '@tiptap/extension-table-cell';
 import TableHeader, {
   TableHeaderOptions,
 } from '@tiptap/extension-table-header';
+import { Gapcursor } from '@tiptap/extension-gapcursor';
 import { EditorService } from '../../editor.service';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { TableModalComponent } from '../modals/table-modal.component';
+import { Editor, Node as ProsemirrorNode } from '@tiptap/core';
 
 //? Combining Table Options Because We only cant pass more than 2
 export interface CombinedTableOptions
@@ -48,18 +54,26 @@ export class CdmTableDirective implements EditorFeature<CombinedTableOptions> {
   button = new ComponentPortal(CdmTableButton);
 
   extension = async (): Promise<any[]> => {
-    const [tableModule, tableRowModule, tableCellModule, tableHeaderModule] =
-      await Promise.all([
-        import('@tiptap/extension-table'),
-        import('@tiptap/extension-table-row'),
-        import('@tiptap/extension-table-cell'),
-        import('@tiptap/extension-table-header'),
-      ]);
+    const [
+      tableModule,
+      tableRowModule,
+      tableCellModule,
+      tableHeaderModule,
+      Gapcursor,
+    ] = await Promise.all([
+      import('@tiptap/extension-table'),
+      import('@tiptap/extension-table-row'),
+      import('@tiptap/extension-table-cell'),
+      import('@tiptap/extension-table-header'),
+      import('@tiptap/extension-gapcursor'),
+    ]);
+
     return [
       tableModule.Table,
       tableRowModule.TableRow,
       tableCellModule.TableCell,
       tableHeaderModule.TableHeader,
+      Gapcursor.Gapcursor,
     ];
   };
 }
@@ -72,10 +86,13 @@ export class CdmTableDirective implements EditorFeature<CombinedTableOptions> {
 })
 export class CdmTableButton {
   editorService = inject(EditorService);
+  @Output() tableClicked: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
     private modalService: NzModalService,
-    private messageService: NzMessageService
+    private messageService: NzMessageService,
+    private renderer: Renderer2,
+    private el: ElementRef
   ) {}
 
   onClick() {

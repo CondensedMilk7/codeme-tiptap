@@ -15,12 +15,15 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableModalComponent } from './editor-feature/modals/table-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TableOverlayComponent } from './editor-feature/modals/table-overlay.component';
+import { EditorService } from 'codeme-tiptap';
 
 @NgModule({
   declarations: [
     CodemeTiptapComponent,
     EditorToolbarComponent,
     TableModalComponent,
+    TableOverlayComponent,
   ],
   imports: [
     CommonModule,
