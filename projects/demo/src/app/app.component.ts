@@ -43,8 +43,7 @@ import { EditorService } from 'projects/codeme-tiptap/src/public-api';
 export class AppComponent implements OnInit {
   paragraphEnabled = false;
   content = new FormControl('initial value here', [Validators.required]);
-  constructor(private editorService: EditorService) {}
-  overlay = inject(Overlay);
+  constructor(private editorService: EditorService, private overlay: Overlay) {}
 
   ngOnInit(): void {
     this.content.valueChanges.subscribe((val) =>
@@ -67,14 +66,16 @@ export class AppComponent implements OnInit {
     });
 
     const overlayRef = this.overlay.create(overlayConfig);
+
+    const componentPortal = new ComponentPortal(TableOverlayComponent);
+    const componentRef = overlayRef.attach(componentPortal);
+    componentRef.instance.editorService = this.editorService; // Passing the service instance
+
     overlayRef.backdropClick().subscribe((event) => {
       const clickedElement = event.target as HTMLElement;
       if (!overlayRef.overlayElement.contains(clickedElement)) {
         overlayRef.detach();
       }
     });
-
-    const componentPortal = new ComponentPortal(TableOverlayComponent);
-    overlayRef.attach(componentPortal);
   }
 }

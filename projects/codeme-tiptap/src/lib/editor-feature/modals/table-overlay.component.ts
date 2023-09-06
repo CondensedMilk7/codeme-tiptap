@@ -15,17 +15,20 @@ import { EditorService } from '../../editor.service';
   ],
 })
 export class TableOverlayComponent {
-  constructor(private editorService: EditorService) {}
+  constructor(public editorService: EditorService) {}
+
+  ngOnInit(): void {}
 
   insertRow(event: MouseEvent) {
     event.stopPropagation();
     event.preventDefault();
     if (this.editorService.editor) {
-      alert('editor exists');
-    } else {
-      alert('editor does not exist');
+      // this.editorService.exec((editor) => {
+      //   editor.chain().focus().addRowAfter().run();
+      // });
+
+      alert('insert row');
     }
-    this.editorService.editor?.chain().focus().addRowAfter().run();
   }
 
   @HostListener('click', ['$event'])

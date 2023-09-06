@@ -2,6 +2,7 @@ import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Editor, Node } from '@tiptap/core';
 import { EDITOR_FEATURE, EditorFeature } from './editor-feature/editor-feature';
 import {
+  BehaviorSubject,
   Observable,
   Subject,
   combineLatest,
@@ -17,10 +18,13 @@ import { Document } from '@tiptap/extension-document';
 import { Paragraph } from '@tiptap/extension-paragraph';
 import { Portal } from '@angular/cdk/portal';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class EditorService {
   editor!: Editor;
   currentSelection: any = null;
+  editorInitialized = new BehaviorSubject<boolean>(false);
 
   private features =
     inject<EditorFeature[]>(EDITOR_FEATURE, { optional: true }) || [];
@@ -60,8 +64,9 @@ export class EditorService {
           new Editor({ extensions: [Document, Text, Paragraph, ...extensions] })
       ),
       tap((editor) => {
-        console.log(this.features);
+        console.log('Editor has been initialized.', editor);
         this.editor = editor;
+        this.editorInitialized.next(true);
       })
     );
   }
