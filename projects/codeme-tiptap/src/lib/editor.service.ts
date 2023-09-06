@@ -16,7 +16,6 @@ import { Text } from '@tiptap/extension-text';
 import { Document } from '@tiptap/extension-document';
 import { Paragraph } from '@tiptap/extension-paragraph';
 import { Portal } from '@angular/cdk/portal';
-import { EditorState } from 'prosemirror-state'; // Adjust based on your editor's state management
 
 @Injectable()
 export class EditorService {
