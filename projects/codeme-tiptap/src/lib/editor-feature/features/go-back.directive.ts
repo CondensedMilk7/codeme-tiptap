@@ -31,8 +31,6 @@ export class CdmGoBackDirective implements EditorFeature<HistoryOptions> {
   config = new BehaviorSubject<Partial<HistoryOptions> | null>(null);
   button = new ComponentPortal(CdmGoBackButton);
 
-  constructor(private historyService: TiptapHistoryService) {}
-
   extension = () =>
     import('@tiptap/extension-history').then((m) => m.History as any);
 }
