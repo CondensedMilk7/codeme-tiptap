@@ -29,6 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableOverlayComponent } from './editor-feature/modals/table-overlay.component';
 import { LinkModalComponent } from './editor-feature/modals/link-modal.component';
 import { VideoModalComponent } from './editor-feature/modals/video-modal.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [

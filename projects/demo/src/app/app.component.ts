@@ -37,6 +37,7 @@ lowlight.registerLanguage('typescript', typescript);
       [cdmTable]="{ resizable: true }"
       [cdmCode]="{ lowlight, languageClassPrefix: 'language-', HTMLAttributes: { class: 'code-block' } }"
       [cdmBold]="{}"
+      [cdmBoldIconPath]="'../assets/icons/bold-icon.svg'"
       [cdmItalic]="{}"
       [cdmBulletList]="{}"
       [cdmOrderedList]="{}"

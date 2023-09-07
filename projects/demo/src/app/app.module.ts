@@ -19,9 +19,11 @@ import { CdmImageDirective } from './image/cdm-image.directive';
 
 import { EditorService } from 'projects/codeme-tiptap/src/public-api';
 import { TableClickDirective } from './table-click/cdm-table-click.directive';
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [AppComponent, TableClickDirective],
   imports: [
+    CommonModule,
     BrowserModule,
     CodemeTiptapModule,
     ReactiveFormsModule,
