@@ -10,7 +10,6 @@ import { BehaviorSubject } from 'rxjs';
 import { EditorService } from '../../editor.service';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { History, HistoryOptions } from '@tiptap/extension-history';
-import { TiptapHistoryService } from '../../shared/share-history.service';
 @Directive({
   standalone: true,
   selector: 'cdm-tiptap-editor[cdmUndo], tiptap-editor[cdmUndo]',
@@ -32,9 +31,7 @@ export class CdmGoBackDirective implements EditorFeature<HistoryOptions> {
   config = new BehaviorSubject<Partial<HistoryOptions> | null>(null);
   button = new ComponentPortal(CdmGoBackButton);
 
-  constructor(private historyService:TiptapHistoryService){
-
-  }
+  constructor(private historyService: TiptapHistoryService) {}
 
   extension = () =>
     import('@tiptap/extension-history').then((m) => m.History as any);
