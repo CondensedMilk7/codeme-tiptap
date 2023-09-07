@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Directive,
+  Inject,
   Input,
   inject,
 } from '@angular/core';
@@ -47,11 +48,8 @@ export class CdmLinkDirective implements EditorFeature<LinkOptions> {
 })
 export class CdmLinkButton {
   editorService = inject(EditorService);
-
-  constructor(
-    private modalService: NzModalService,
-    private messageService: NzMessageService
-  ) {}
+  modalService = inject(NzModalService);
+  messageService = inject(NzMessageService);
 
   // TODO: Implement Modal
   onClick() {

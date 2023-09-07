@@ -7,12 +7,21 @@ import {
 } from '@angular/core';
 import { EDITOR_FEATURE, EditorFeature } from '../editor-feature';
 import { BehaviorSubject } from 'rxjs';
-import { lowlight } from 'lowlight/lib/core';
 import { EditorService } from '../../editor.service';
 import CodeBlockLowlight, {
   CodeBlockLowlightOptions,
 } from '@tiptap/extension-code-block-lowlight';
 import { ComponentPortal } from '@angular/cdk/portal';
+import { lowlight } from 'lowlight/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+import html from 'highlight.js/lib/languages/xml';
+import css from 'highlight.js/lib/languages/css';
+import typescript from 'highlight.js/lib/languages/typescript';
+
+lowlight.registerLanguage('javascript', javascript);
+lowlight.registerLanguage('html', html);
+lowlight.registerLanguage('css', css);
+lowlight.registerLanguage('typescript', typescript);
 
 @Directive({
   standalone: true,

@@ -10,17 +10,6 @@ import {
 import { ComponentPortal } from '@angular/cdk/portal';
 import { EditorService } from 'projects/codeme-tiptap/src/public-api';
 
-// Registering the lowlight language
-import javascript from 'highlight.js/lib/languages/javascript';
-import html from 'highlight.js/lib/languages/xml';
-import css from 'highlight.js/lib/languages/css';
-import typescript from 'highlight.js/lib/languages/typescript';
-
-lowlight.registerLanguage('javascript', javascript);
-lowlight.registerLanguage('html', html);
-lowlight.registerLanguage('css', css);
-lowlight.registerLanguage('typescript', typescript);
-
 @Component({
   selector: 'app-root',
   template: `

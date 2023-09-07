@@ -20,6 +20,7 @@ import { CdmImageDirective } from './image/cdm-image.directive';
 import { EditorService } from 'projects/codeme-tiptap/src/public-api';
 import { TableClickDirective } from './table-click/cdm-table-click.directive';
 import { CommonModule } from '@angular/common';
+import { LowlightService } from './lowlight-register.service';
 @NgModule({
   declarations: [AppComponent, TableClickDirective],
   imports: [
@@ -38,7 +39,7 @@ import { CommonModule } from '@angular/common';
     CdmGoForwardDirective,
     CdmGoBackDirective,
   ],
-  providers: [EditorService],
+  providers: [EditorService, LowlightService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
