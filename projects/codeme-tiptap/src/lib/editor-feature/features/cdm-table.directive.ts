@@ -90,9 +90,7 @@ export class CdmTableButton {
 
   constructor(
     private modalService: NzModalService,
-    private messageService: NzMessageService,
-    private renderer: Renderer2,
-    private el: ElementRef
+    private messageService: NzMessageService
   ) {}
 
   onClick() {

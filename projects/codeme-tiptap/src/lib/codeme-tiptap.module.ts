@@ -6,7 +6,18 @@ import { CommonModule } from '@angular/common';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 
 import { EditorToolbarComponent } from './ui/editor-toolbar.component';
-import { CdmHeadingDirective } from './editor-feature';
+import {
+  CdmBulletListDirective,
+  CdmCodeDirective,
+  CdmHeadingDirective,
+  CdmLinkDirective,
+  CdmItalicDirective,
+  CdmBoldDirective,
+  CdmOrderedListDirective,
+  CdmVideoDirective,
+  CdmGoForwardDirective,
+  CdmGoBackDirective,
+} from './editor-feature';
 import { CdmParagraphDirective } from './editor-feature';
 import { PortalModule } from '@angular/cdk/portal';
 import { CdmTableDirective } from './editor-feature/features/cdm-table.directive';
@@ -16,6 +27,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TableModalComponent } from './editor-feature/modals/table-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableOverlayComponent } from './editor-feature/modals/table-overlay.component';
+import { LinkModalComponent } from './editor-feature/modals/link-modal.component';
+import { VideoModalComponent } from './editor-feature/modals/video-modal.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +36,8 @@ import { TableOverlayComponent } from './editor-feature/modals/table-overlay.com
     EditorToolbarComponent,
     TableModalComponent,
     TableOverlayComponent,
+    LinkModalComponent,
+    VideoModalComponent,
   ],
   imports: [
     CommonModule,
@@ -36,12 +51,30 @@ import { TableOverlayComponent } from './editor-feature/modals/table-overlay.com
     NzMessageModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    CdmCodeDirective,
+    CdmLinkDirective,
+    CdmBoldDirective,
+    CdmItalicDirective,
+    CdmBulletListDirective,
+    CdmOrderedListDirective,
+    CdmVideoDirective,
+    CdmGoForwardDirective,
+    CdmGoBackDirective,
   ],
   exports: [
     CodemeTiptapComponent,
     CdmHeadingDirective,
     CdmParagraphDirective,
     CdmTableDirective,
+    CdmCodeDirective,
+    CdmLinkDirective,
+    CdmBoldDirective,
+    CdmItalicDirective,
+    CdmBulletListDirective,
+    CdmOrderedListDirective,
+    CdmVideoDirective,
+    CdmGoForwardDirective,
+    CdmGoBackDirective,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
 })

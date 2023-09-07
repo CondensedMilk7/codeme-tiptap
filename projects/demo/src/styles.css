@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../../../node_modules/ng-zorro-antd/ng-zorro-antd.min.css";
+/* Code Styles */
 
+@import "../../../node_modules/highlight.js/styles/github.css";
 
 /* Table Styles Code */
 .ProseMirror .tableWrapper table {
@@ -64,4 +66,14 @@
   background-color: transparent !important;
   z-index: 0 !important;
   display: none !important;
+}
+
+.code-block{
+  width: 100%;
+  height: auto;
+  min-height: 50px;
+  background-color: #272822;
+  border-radius: 12px;
+  padding: 12px;
+  color: #f9f9f9;
 }

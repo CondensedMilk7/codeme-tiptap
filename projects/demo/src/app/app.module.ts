@@ -6,6 +6,13 @@ import {
   CdmHeadingDirective,
   CodemeTiptapModule,
   CdmTableDirective,
+  CdmCodeDirective,
+  CdmLinkDirective,
+  CdmBoldDirective,
+  CdmBulletListDirective,
+  CdmVideoDirective,
+  CdmGoForwardDirective,
+  CdmGoBackDirective,
 } from 'codeme-tiptap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CdmImageDirective } from './image/cdm-image.directive';
@@ -21,6 +28,13 @@ import { TableClickDirective } from './table-click/cdm-table-click.directive';
     CdmHeadingDirective,
     CdmTableDirective,
     CdmImageDirective,
+    CdmCodeDirective,
+    CdmLinkDirective,
+    CdmBoldDirective,
+    CdmBulletListDirective,
+    CdmVideoDirective,
+    CdmGoForwardDirective,
+    CdmGoBackDirective,
   ],
   providers: [EditorService],
   bootstrap: [AppComponent],

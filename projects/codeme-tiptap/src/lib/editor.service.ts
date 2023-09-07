@@ -48,12 +48,24 @@ export class EditorService {
 
   buttons: Portal<any>[] = this.features
     .filter((feat) => feat.button)
-    // features are filtered, so button cannot be undefined
     .map((feat) => feat.button as Portal<any>);
 
   extensions$: Observable<Node[]> = combineLatest(this.features$).pipe(
     map((extensionsArray) => {
-      return extensionsArray.flat().filter(Boolean) as Node[];
+      const flatExtensions = extensionsArray.flat().filter(Boolean) as Node[];
+
+      const uniqueExtensions = flatExtensions.reduce(
+        (acc: Node[], current: Node) => {
+          const isDuplicate = acc.find((ext) => ext.name === current.name);
+          if (!isDuplicate) {
+            acc.push(current);
+          }
+          return acc;
+        },
+        []
+      );
+
+      return uniqueExtensions;
     })
   );
 
