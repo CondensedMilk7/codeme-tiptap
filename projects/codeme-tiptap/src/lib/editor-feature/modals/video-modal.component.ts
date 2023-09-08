@@ -1,11 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   FormControl,
+  ReactiveFormsModule,
 } from '@angular/forms';
-import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 
 // Validator
 
@@ -20,7 +22,9 @@ function youtubeUrlValidator(
 }
 
 @Component({
+  imports: [CommonModule, ReactiveFormsModule, NzModalModule],
   selector: 'video-modal',
+  standalone: true,
   template: `
     <form [formGroup]="formGroup" (ngSubmit)="submit()">
       <input formControlName="videoUrl" placeholder="Enter YouTube video URL" />

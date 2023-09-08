@@ -38,7 +38,7 @@ export class CdmItalicDirective implements EditorFeature<ItalicOptions> {
   button = new ComponentPortal(CdmItalicButton);
 
   extension = () =>
-    import('@tiptap/extension-Italic').then((m) => m.Italic as any);
+    import('@tiptap/extension-italic').then((m) => m.Italic as any);
 }
 
 @Component({
@@ -61,7 +61,7 @@ export class CdmItalicButton {
   constructor(private CdmItalicDirective: CdmItalicDirective) {
     this.iconPath$ = this.CdmItalicDirective.iconPath;
   }
-  
+
   onClick() {
     this.editorService.exec((editor) =>
       editor.chain().focus().toggleItalic().run()

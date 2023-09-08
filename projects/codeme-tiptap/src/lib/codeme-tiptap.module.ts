@@ -22,22 +22,10 @@ import { PortalModule } from '@angular/cdk/portal';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TableModalComponent } from './editor-feature/modals/table-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TableOverlayComponent } from './editor-feature/modals/table-overlay.component';
-import { LinkModalComponent } from './editor-feature/modals/link-modal.component';
-import { VideoModalComponent } from './editor-feature/modals/video-modal.component';
-import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
-  declarations: [
-    CodemeTiptapComponent,
-    EditorToolbarComponent,
-    TableModalComponent,
-    TableOverlayComponent,
-    LinkModalComponent,
-    VideoModalComponent,
-  ],
+  declarations: [CodemeTiptapComponent, EditorToolbarComponent],
   imports: [
     CommonModule,
     FormsModule,

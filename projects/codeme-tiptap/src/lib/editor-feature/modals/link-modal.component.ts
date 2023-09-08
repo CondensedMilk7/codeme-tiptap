@@ -1,11 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 
 // Validator
 // TODO: Take this out
@@ -17,7 +19,9 @@ function httpsValidator(control: FormControl): { [s: string]: boolean } | null {
 }
 
 @Component({
+  imports: [CommonModule, ReactiveFormsModule, NzModalModule],
   selector: 'table-modal',
+  standalone: true,
   template: `
     <form [formGroup]="formGroup">
       <div nz-row>
