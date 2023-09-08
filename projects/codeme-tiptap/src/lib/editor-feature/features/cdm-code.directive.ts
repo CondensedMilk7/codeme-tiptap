@@ -12,17 +12,9 @@ import CodeBlockLowlight, {
   CodeBlockLowlightOptions,
 } from '@tiptap/extension-code-block-lowlight';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { lowlight } from 'lowlight/lib/core';
-import javascript from 'highlight.js/lib/languages/javascript';
-import html from 'highlight.js/lib/languages/xml';
-import css from 'highlight.js/lib/languages/css';
-import typescript from 'highlight.js/lib/languages/typescript';
-import { CommonModule } from '@angular/common';
 
-lowlight.registerLanguage('javascript', javascript);
-lowlight.registerLanguage('html', html);
-lowlight.registerLanguage('css', css);
-lowlight.registerLanguage('typescript', typescript);
+import { CommonModule } from '@angular/common';
+import { registerHighlightLanguages } from '../../bundles/highlight-languages.bundle';
 
 @Directive({
   standalone: true,
@@ -52,6 +44,13 @@ export class CdmCodeDirective
   config = new BehaviorSubject<Partial<CodeBlockLowlightOptions> | null>(null);
   button = new ComponentPortal(CdmCodeButton);
 
+  @Input() set cdmLanguageConfig(config: Record<string, any>) {
+    this.languageConfig.next(config);
+    registerHighlightLanguages(config);
+  }
+
+  languageConfig = new BehaviorSubject<Record<string, any> | null>(null);
+
   extension = () =>
     import('@tiptap/extension-code-block-lowlight').then(
       (m) => m.CodeBlockLowlight
@@ -78,6 +77,7 @@ export class CdmCodeButton {
   constructor(private CdmCodeDirective: CdmCodeDirective) {
     this.iconPath$ = this.CdmCodeDirective.iconPath;
   }
+
   onClick() {
     this.editorService.exec((editor) =>
       editor.chain().focus().toggleCodeBlock().run()

@@ -25,6 +25,12 @@ import { EditorService } from 'projects/codeme-tiptap/src/public-api';
       [cdmParagraph]="paragraphEnabled ? '' : false"
       [cdmTable]="{ resizable: true }"
       [cdmCode]="{ lowlight, languageClassPrefix: 'language-', HTMLAttributes: { class: 'code-block' } }"
+      [cdmLanguageConfig]="{
+        javascript: false,
+        html: true,
+        css: true,
+        typescript: true
+      }"
       [cdmBold]="{}"
       [cdmItalic]="{}"
       [cdmBulletList]="{}"
