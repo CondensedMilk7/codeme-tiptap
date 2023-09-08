@@ -1,4 +1,4 @@
-import { Component, Directive, Injector, inject } from '@angular/core';
+import { Component, Directive, Injector, Input, inject } from '@angular/core';
 import { EDITOR_FEATURE, EditorFeature, EditorService } from 'codeme-tiptap';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { BehaviorSubject } from 'rxjs';
@@ -21,6 +21,11 @@ import { Editor } from '@tiptap/core';
 export class CdmImageDirective implements EditorFeature {
   injector = inject(Injector);
 
+  @Input() set cdmImageIconPath(path: string) {
+    this.iconPath.next(path);
+  }
+
+  iconPath = new BehaviorSubject<string | null>(null);
   enabled = new BehaviorSubject(true);
   config = new BehaviorSubject(null);
   button = new ComponentPortal(CdmImageButtonComponent);
@@ -35,11 +40,19 @@ export class CdmImageDirective implements EditorFeature {
   imports: [CommonModule, NzModalModule],
   standalone: true,
   selector: 'cdm-image-button',
-  template: `<button (click)="applyImage()">IMG</button>`,
+  template: ` <button (click)="applyImage()">
+    <img *ngIf="iconPath$ | async; else textImage" [src]="iconPath$ | async" />
+    <ng-template #textImage>Image</ng-template>
+  </button>`,
 })
 export class CdmImageButtonComponent {
   editor = inject(EditorService);
   modalService = inject(NzModalService);
+  iconPath$: BehaviorSubject<string | null>;
+
+  constructor(private CdmImageDirective: CdmImageDirective) {
+    this.iconPath$ = this.CdmImageDirective.iconPath;
+  }
 
   applyImage(): void {
     const modal = this.modalService.create({

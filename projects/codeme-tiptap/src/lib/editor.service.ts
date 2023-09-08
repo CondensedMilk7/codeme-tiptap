@@ -1,15 +1,30 @@
-import { Injectable, inject } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Editor, Node } from '@tiptap/core';
 import { EDITOR_FEATURE, EditorFeature } from './editor-feature/editor-feature';
-import { Observable, combineLatest, from, map, of, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  combineLatest,
+  first,
+  from,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { Text } from '@tiptap/extension-text';
 import { Document } from '@tiptap/extension-document';
 import { Paragraph } from '@tiptap/extension-paragraph';
 import { Portal } from '@angular/cdk/portal';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class EditorService {
   editor!: Editor;
+  currentSelection: any = null;
+  editorInitialized = new BehaviorSubject<boolean>(false);
 
   private features =
     inject<EditorFeature[]>(EDITOR_FEATURE, { optional: true }) || [];
@@ -33,12 +48,24 @@ export class EditorService {
 
   buttons: Portal<any>[] = this.features
     .filter((feat) => feat.button)
-    // features are filtered, so button cannot be undefined
     .map((feat) => feat.button as Portal<any>);
 
   extensions$: Observable<Node[]> = combineLatest(this.features$).pipe(
     map((extensionsArray) => {
-      return extensionsArray.flat().filter(Boolean) as Node[];
+      const flatExtensions = extensionsArray.flat().filter(Boolean) as Node[];
+
+      const uniqueExtensions = flatExtensions.reduce(
+        (acc: Node[], current: Node) => {
+          const isDuplicate = acc.find((ext) => ext.name === current.name);
+          if (!isDuplicate) {
+            acc.push(current);
+          }
+          return acc;
+        },
+        []
+      );
+
+      return uniqueExtensions;
     })
   );
 
@@ -49,13 +76,29 @@ export class EditorService {
           new Editor({ extensions: [Document, Text, Paragraph, ...extensions] })
       ),
       tap((editor) => {
-        console.log(this.features);
+        console.log('Editor has been initialized.', editor);
         this.editor = editor;
+        this.editorInitialized.next(true);
       })
     );
   }
 
   exec(cb: (editor: Editor) => void) {
+    if (!this.editor) {
+      console.error('Editor not initialized');
+      return;
+    }
     cb(this.editor);
+  }
+
+  private boldIconPath = new BehaviorSubject<string>('');
+  private bulletListIconPath = new BehaviorSubject<string>('');
+
+  setBoldIconPath(path: string) {
+    this.boldIconPath.next(path);
+  }
+
+  setBulletListIconPath(path: string) {
+    this.bulletListIconPath.next(path);
   }
 }
