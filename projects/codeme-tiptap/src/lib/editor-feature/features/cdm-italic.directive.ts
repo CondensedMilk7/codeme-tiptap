@@ -61,6 +61,7 @@ export class CdmItalicButton {
   constructor(private CdmItalicDirective: CdmItalicDirective) {
     this.iconPath$ = this.CdmItalicDirective.iconPath;
   }
+  
   onClick() {
     this.editorService.exec((editor) =>
       editor.chain().focus().toggleItalic().run()

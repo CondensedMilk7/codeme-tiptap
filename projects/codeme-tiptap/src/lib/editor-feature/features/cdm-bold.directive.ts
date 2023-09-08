@@ -64,9 +64,6 @@ export class CdmBoldButton {
 
   constructor(private cdmBoldDirective: CdmBoldDirective) {
     this.iconPath$ = this.cdmBoldDirective.iconPath;
-    this.iconPath$.subscribe((data) => {
-      console.log('Icon Path:', data);
-    });
   }
 
   onClick() {

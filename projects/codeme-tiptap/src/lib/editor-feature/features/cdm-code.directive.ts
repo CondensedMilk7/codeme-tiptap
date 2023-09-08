@@ -77,9 +77,6 @@ export class CdmCodeButton {
 
   constructor(private CdmCodeDirective: CdmCodeDirective) {
     this.iconPath$ = this.CdmCodeDirective.iconPath;
-    this.iconPath$.subscribe((data) => {
-      console.log('Icon Path:', data);
-    });
   }
   onClick() {
     this.editorService.exec((editor) =>

@@ -17,6 +17,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import Youtube, { YoutubeOptions } from '@tiptap/extension-youtube';
 import { EDITOR_FEATURE, EditorFeature, EditorService } from 'codeme-tiptap';
 import { VideoModalComponent } from 'projects/codeme-tiptap/src/lib/editor-feature/modals/video-modal.component';
+import { CommonModule } from '@angular/common';
 
 @Directive({
   standalone: true,
@@ -35,6 +36,11 @@ export class CdmVideoDirective implements EditorFeature<YoutubeOptions> {
     this.config.next(config || null);
   }
 
+  @Input() set cdmVideoIconPath(path: string) {
+    this.iconPath.next(path);
+  }
+  iconPath = new BehaviorSubject<string | null>(null);
+
   enabled = new BehaviorSubject(false);
   config = new BehaviorSubject<Partial<YoutubeOptions> | null>(null);
   button = new ComponentPortal(CdmVideoButton);
@@ -44,18 +50,29 @@ export class CdmVideoDirective implements EditorFeature<YoutubeOptions> {
 }
 
 @Component({
+  imports: [CommonModule],
   selector: 'cdm-video-button',
-  template: ` <button (click)="onClick()">Video</button> `,
+  template: `<button (click)="onClick()">
+      <img
+        *ngIf="iconPath$ | async; else textVideo"
+        [src]="iconPath$ | async"
+      />
+    </button>
+    <ng-template #textVideo>Video</ng-template>`,
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CdmVideoButton {
   editorService = inject(EditorService);
+  iconPath$: BehaviorSubject<string | null>;
 
   constructor(
     private modalService: NzModalService,
-    private messageService: NzMessageService
-  ) {}
+    private messageService: NzMessageService,
+    private CdmVideoDirective: CdmVideoDirective
+  ) {
+    this.iconPath$ = this.CdmVideoDirective.iconPath;
+  }
 
   onClick() {
     this.modalService.create({

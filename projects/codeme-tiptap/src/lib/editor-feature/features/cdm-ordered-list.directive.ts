@@ -76,9 +76,6 @@ export class CdmOrderedListButton {
   iconPath$: BehaviorSubject<string | null>;
   constructor(private CdmOrderedListDirective: CdmOrderedListDirective) {
     this.iconPath$ = this.CdmOrderedListDirective.iconPath;
-    this.iconPath$.subscribe((data) => {
-      console.log('Icon Path:', data);
-    });
   }
   onClick() {
     this.editorService.exec((editor) =>

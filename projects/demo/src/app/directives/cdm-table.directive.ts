@@ -1,15 +1,23 @@
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Directive, Input, Component, ChangeDetectionStrategy, inject, Output, EventEmitter } from '@angular/core';
+import {
+  Directive,
+  Input,
+  Component,
+  ChangeDetectionStrategy,
+  inject,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { TableOptions } from '@tiptap/extension-table';
 import { TableCellOptions } from '@tiptap/extension-table-cell';
 import { TableHeaderOptions } from '@tiptap/extension-table-header';
 import { TableRowOptions } from '@tiptap/extension-table-row';
 import { EDITOR_FEATURE, EditorFeature, EditorService } from 'codeme-tiptap';
-import { TableModalComponent } from 'projects/codeme-tiptap/src/lib/editor-feature/modals/table-modal.component'
+import { TableModalComponent } from 'projects/codeme-tiptap/src/lib/editor-feature/modals/table-modal.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { BehaviorSubject } from 'rxjs';
-
+import { CommonModule } from '@angular/common';
 
 //? Combining Table Options Because We only cant pass more than 2
 export interface CombinedTableOptions
@@ -34,6 +42,12 @@ export class CdmTableDirective implements EditorFeature<CombinedTableOptions> {
     this.enabled.next(config !== false);
     this.config.next(config || null);
   }
+
+  @Input() set cdmTableIconPath(path: string) {
+    this.iconPath.next(path);
+  }
+
+  iconPath = new BehaviorSubject<string | null>(null);
 
   enabled = new BehaviorSubject(false);
   config = new BehaviorSubject<Partial<TableOptions> | null>(null);
@@ -65,19 +79,30 @@ export class CdmTableDirective implements EditorFeature<CombinedTableOptions> {
 }
 
 @Component({
+  imports: [CommonModule],
   selector: 'cdm-table-button',
-  template: ` <button (click)="onClick()">Table</button> `,
+  template: ` <button (click)="onClick()">
+    <img
+      *ngIf="iconPath$ | async; else textTable"
+      [src]="iconPath$ | async"
+      alt="Table"
+    />
+    <ng-template #textTable>Table</ng-template>
+  </button>`,
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CdmTableButton {
   editorService = inject(EditorService);
   @Output() tableClicked: EventEmitter<void> = new EventEmitter<void>();
-
+  iconPath$: BehaviorSubject<string | null>;
   constructor(
     private modalService: NzModalService,
-    private messageService: NzMessageService
-  ) {}
+    private messageService: NzMessageService,
+    private CdmTableDirective: CdmTableDirective
+  ) {
+    this.iconPath$ = this.CdmTableDirective.iconPath;
+  }
 
   onClick() {
     this.applyTable();

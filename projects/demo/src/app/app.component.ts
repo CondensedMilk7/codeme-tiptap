@@ -46,7 +46,14 @@ import { EditorService } from 'projects/codeme-tiptap/src/public-api';
         '../assets/icons/h2-icon.svg',
         '../assets/icons/h3-icon.svg'
       ]"
+      [cdmLinkIconPath]="'../assets/icons/link-icon.svg'"
+      [cdmBlockquoteIconPath]="'../assets/icons/blockquote-icon.svg'"
       [cdmOrderedListIconPath]="'../assets/icons/ordered-list-icon.svg'"
+      [cdmUndoIconPath]="'../assets/icons/undo-icon.svg'"
+      [cdmRedoIconPath]="'../assets/icons/redo-icon.svg'"
+      [cdmVideoIconPath]="'../assets/icons/video-icon.svg'"
+      [cdmTableIconPath]="'../assets/icons/table-icon.svg'"
+      [cdmImageIconPath]="'../assets/icons/image-icon.svg'"
     ></cdm-tiptap-editor>
     <div style="color: red" *ngIf="content.invalid">Invalid!</div>
   `,

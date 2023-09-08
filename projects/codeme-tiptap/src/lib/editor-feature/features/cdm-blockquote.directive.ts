@@ -9,7 +9,7 @@ import { EDITOR_FEATURE, EditorFeature } from '../editor-feature';
 import { BehaviorSubject } from 'rxjs';
 import { EditorService } from '../../editor.service';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Blockquote, BlockquoteOptions } from '@tiptap/extension-blockquote';
+import { BlockquoteOptions } from '@tiptap/extension-blockquote';
 import { CommonModule } from '@angular/common';
 
 @Directive({

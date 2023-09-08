@@ -35,7 +35,7 @@ export class CdmBulletListDirective
     this.iconPath.next(path);
   }
   iconPath = new BehaviorSubject<string | null>(null);
-  
+
   enabled = new BehaviorSubject(false);
   config = new BehaviorSubject<Partial<BulletListOptions> | null>(null);
   button = new ComponentPortal(CdmBulletListButton);
@@ -72,10 +72,8 @@ export class CdmBulletListButton {
 
   constructor(private CdmBulletListDirective: CdmBulletListDirective) {
     this.iconPath$ = this.CdmBulletListDirective.iconPath;
-    this.iconPath$.subscribe((data) => {
-      console.log('Icon Path:', data);
-    });
   }
+
   onClick() {
     this.editorService.exec((editor) =>
       editor.chain().focus().toggleBulletList().run()

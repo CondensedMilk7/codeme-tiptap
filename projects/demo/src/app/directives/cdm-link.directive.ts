@@ -48,7 +48,12 @@ export class CdmLinkDirective implements EditorFeature<LinkOptions> {
 @Component({
   imports: [CommonModule],
   selector: 'cdm-link-button',
-  template: ` <button (click)="onClick()">Link</button> `,
+  template: `
+    <button (click)="onClick()">
+      <img *ngIf="iconPath$ | async; else textLink" [src]="iconPath$ | async" />
+      <ng-template #textLink>Link</ng-template>
+    </button>
+  `,
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -57,6 +62,10 @@ export class CdmLinkButton {
   modalService = inject(NzModalService);
   messageService = inject(NzMessageService);
 
+  iconPath$: BehaviorSubject<string | null>;
+  constructor(private CdmLinkDirective: CdmLinkDirective) {
+    this.iconPath$ = this.CdmLinkDirective.iconPath;
+  }
   // TODO: Implement Modal
   onClick() {
     this.modalService.create({
