@@ -1,8 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
+  imports: [CommonModule, ReactiveFormsModule],
   selector: 'table-modal',
+  standalone: true,
   template: `
     <form [formGroup]="tableForm">
       <div>

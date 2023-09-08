@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
   content = new FormControl('initial value here', [Validators.required]);
   //? getting lowlight
   lowlight = lowlight;
-  constructor(private editorService: EditorService, private overlay: Overlay) {}
+  constructor(private overlay: Overlay) {}
 
   ngOnInit(): void {
     this.content.valueChanges.subscribe((val) =>
@@ -87,10 +87,6 @@ export class AppComponent implements OnInit {
     });
 
     const overlayRef = this.overlay.create(overlayConfig);
-
-    const componentPortal = new ComponentPortal(TableOverlayComponent);
-    const componentRef = overlayRef.attach(componentPortal);
-    componentRef.instance.editorService = this.editorService; // Passing the service instance
 
     overlayRef.backdropClick().subscribe((event) => {
       const clickedElement = event.target as HTMLElement;

@@ -14,7 +14,6 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { CdmImageDirective } from './image/cdm-image.directive';
 
-import { EditorService } from 'projects/codeme-tiptap/src/public-api';
 import { TableClickDirective } from './table-click/cdm-table-click.directive';
 import { CommonModule } from '@angular/common';
 import { LowlightService } from './lowlight-register.service';
@@ -39,7 +38,7 @@ import { CdmVideoDirective } from 'projects/demo/src/app/directives/cdm-video.di
     CdmLinkDirective,
     CdmTableDirective,
   ],
-  providers: [EditorService, LowlightService],
+  providers: [LowlightService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

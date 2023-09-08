@@ -1,10 +1,13 @@
 import { Component, OnInit, HostListener, inject } from '@angular/core';
 import { EditorService } from '../../editor.service';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
+  imports: [CommonModule, ReactiveFormsModule],
   selector: 'table-overlay',
   template: `<button (click)="insertRow($event)">Insert Row</button>`,
-
+  standalone: true,
   styles: [
     `
       button {
@@ -22,14 +25,13 @@ export class TableOverlayComponent {
   insertRow(event: MouseEvent) {
     event.stopPropagation();
     event.preventDefault();
+    console.log(this.editorService);
     if (this.editorService.editor) {
-      // this.editorService.exec((editor) => {
-      //   editor.chain().focus().addRowAfter().run();
-      // });
-
-      alert('insert row');
+      this.editorService.exec((editor) => {
+        editor.chain().focus().addRowAfter().run();
+      });
     } else {
-      alert('no editor');
+      console.error('no editor');
     }
   }
 

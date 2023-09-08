@@ -18,12 +18,9 @@ import { Document } from '@tiptap/extension-document';
 import { Paragraph } from '@tiptap/extension-paragraph';
 import { Portal } from '@angular/cdk/portal';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class EditorService {
   editor!: Editor;
-  currentSelection: any = null;
   editorInitialized = new BehaviorSubject<boolean>(false);
 
   private features =
