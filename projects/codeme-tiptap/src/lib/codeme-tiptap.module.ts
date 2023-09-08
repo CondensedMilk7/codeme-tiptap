@@ -15,6 +15,7 @@ import {
   CdmOrderedListDirective,
   CdmGoForwardDirective,
   CdmGoBackDirective,
+  CdmBlockquoteDirective,
 } from './editor-feature';
 import { CdmParagraphDirective } from './editor-feature';
 import { PortalModule } from '@angular/cdk/portal';
@@ -55,6 +56,7 @@ import { BrowserModule } from '@angular/platform-browser';
     CdmOrderedListDirective,
     CdmGoForwardDirective,
     CdmGoBackDirective,
+    CdmBlockquoteDirective,
   ],
   exports: [
     CodemeTiptapComponent,
@@ -67,6 +69,7 @@ import { BrowserModule } from '@angular/platform-browser';
     CdmOrderedListDirective,
     CdmGoForwardDirective,
     CdmGoBackDirective,
+    CdmBlockquoteDirective,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
 })

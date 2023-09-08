@@ -7,3 +7,4 @@ export * from './cdm-bullet-list.directive';
 export * from './cdm-ordered-list.directive';
 export * from './go-back.directive';
 export * from './go-forward.directive';
+export * from './cdm-blockquote.directive';

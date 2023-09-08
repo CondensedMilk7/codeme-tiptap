@@ -33,6 +33,7 @@ import { EditorService } from 'projects/codeme-tiptap/src/public-api';
       [cdmLink]="{ openOnClick: true, HTMLAttributes: { target: '_blank' } }"
       tableClick
       (tableClicked)="onTableClicked()"
+      [cdmBlockquote]="{}"
       [cdmUndo]="{}"
       [cdmRedo]="{}"
       cdmImage
