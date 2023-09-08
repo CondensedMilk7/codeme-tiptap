@@ -59,14 +59,4 @@ export class CodemeTiptapComponent implements ControlValueAccessor {
   registerOnTouched(fn: () => void): void {
     this.onTouch = fn;
   }
-
-  @Input() set cdmIcons(icons: { bold: string; bulletList: string }) {
-    if (icons.bold) {
-      this.editorService.setBoldIconPath(icons.bold);
-    }
-
-    if (icons.bulletList) {
-      this.editorService.setBulletListIconPath(icons.bulletList);
-    }
-  }
 }

@@ -90,15 +90,4 @@ export class EditorService {
     }
     cb(this.editor);
   }
-
-  private boldIconPath = new BehaviorSubject<string>('');
-  private bulletListIconPath = new BehaviorSubject<string>('');
-
-  setBoldIconPath(path: string) {
-    this.boldIconPath.next(path);
-  }
-
-  setBulletListIconPath(path: string) {
-    this.bulletListIconPath.next(path);
-  }
 }
