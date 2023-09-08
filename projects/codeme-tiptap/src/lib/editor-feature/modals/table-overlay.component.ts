@@ -28,6 +28,8 @@ export class TableOverlayComponent {
       // });
 
       alert('insert row');
+    } else {
+      alert('no editor');
     }
   }
 

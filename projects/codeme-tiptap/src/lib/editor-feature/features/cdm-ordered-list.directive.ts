@@ -13,6 +13,7 @@ import {
   OrderedList,
   OrderedListOptions,
 } from '@tiptap/extension-ordered-list';
+import { CommonModule } from '@angular/common';
 @Directive({
   standalone: true,
   selector: 'cdm-tiptap-editor[cdmOrderedList], tiptap-editor[cdmOrderedList]',
@@ -34,6 +35,12 @@ export class CdmOrderedListDirective
     this.config.next(config || null);
   }
 
+  //? Icon Path
+  @Input() set cdmOrderedListIconPath(path: string) {
+    this.iconPath.next(path);
+  }
+  iconPath = new BehaviorSubject<string | null>(null);
+
   enabled = new BehaviorSubject(false);
   config = new BehaviorSubject<Partial<OrderedListOptions> | null>(null);
   button = new ComponentPortal(CdmOrderedListButton);
@@ -51,14 +58,28 @@ export class CdmOrderedListDirective
 }
 
 @Component({
+  imports: [CommonModule],
   selector: 'cdm-ordered-list-button',
-  template: ` <button (click)="onClick()">Ordered List</button> `,
+  template: ` <button (click)="onClick()">
+    <img
+      *ngIf="iconPath$ | async; else textOrderedList"
+      [src]="iconPath$ | async"
+      alt="Italic"
+    />
+    <ng-template #textOrderedList>Ordered List</ng-template>
+  </button>`,
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CdmOrderedListButton {
   editorService = inject(EditorService);
-
+  iconPath$: BehaviorSubject<string | null>;
+  constructor(private CdmOrderedListDirective: CdmOrderedListDirective) {
+    this.iconPath$ = this.CdmOrderedListDirective.iconPath;
+    this.iconPath$.subscribe((data) => {
+      console.log('Icon Path:', data);
+    });
+  }
   onClick() {
     this.editorService.exec((editor) =>
       editor.chain().focus().toggleOrderedList().run()

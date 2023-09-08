@@ -5,12 +5,9 @@ import { AppComponent } from './app.component';
 import {
   CdmHeadingDirective,
   CodemeTiptapModule,
-  CdmTableDirective,
   CdmCodeDirective,
-  CdmLinkDirective,
   CdmBoldDirective,
   CdmBulletListDirective,
-  CdmVideoDirective,
   CdmGoForwardDirective,
   CdmGoBackDirective,
 } from 'codeme-tiptap';
@@ -21,6 +18,9 @@ import { EditorService } from 'projects/codeme-tiptap/src/public-api';
 import { TableClickDirective } from './table-click/cdm-table-click.directive';
 import { CommonModule } from '@angular/common';
 import { LowlightService } from './lowlight-register.service';
+import { CdmLinkDirective } from 'projects/demo/src/app/directives/cdm-link.directive';
+import { CdmTableDirective } from 'projects/demo/src/app/directives/cdm-table.directive';
+import { CdmVideoDirective } from 'projects/demo/src/app/directives/cdm-video.directive';
 @NgModule({
   declarations: [AppComponent, TableClickDirective],
   imports: [
@@ -29,15 +29,15 @@ import { LowlightService } from './lowlight-register.service';
     CodemeTiptapModule,
     ReactiveFormsModule,
     CdmHeadingDirective,
-    CdmTableDirective,
     CdmImageDirective,
     CdmCodeDirective,
-    CdmLinkDirective,
     CdmBoldDirective,
     CdmBulletListDirective,
     CdmVideoDirective,
     CdmGoForwardDirective,
     CdmGoBackDirective,
+    CdmLinkDirective,
+    CdmTableDirective,
   ],
   providers: [EditorService, LowlightService],
   bootstrap: [AppComponent],

@@ -26,17 +26,26 @@ import { EditorService } from 'projects/codeme-tiptap/src/public-api';
       [cdmTable]="{ resizable: true }"
       [cdmCode]="{ lowlight, languageClassPrefix: 'language-', HTMLAttributes: { class: 'code-block' } }"
       [cdmBold]="{}"
-      [cdmBoldIconPath]="'../assets/icons/bold-icon.svg'"
       [cdmItalic]="{}"
       [cdmBulletList]="{}"
       [cdmOrderedList]="{}"
       [cdmVideo]="{}"
       [cdmLink]="{ openOnClick: true, HTMLAttributes: { target: '_blank' } }"
+      tableClick
+      (tableClicked)="onTableClicked()"
       [cdmUndo]="{}"
       [cdmRedo]="{}"
       cdmImage
-      tableClick
-      (tableClicked)="onTableClicked()"
+      [cdmBoldIconPath]="'../assets/icons/bold-icon.svg'"
+      [cdmBulletListIconPath]="'../assets/icons/bullet-list-icon.svg'"
+      [cdmCodeIconPath]="'../assets/icons/code-icon.svg'"
+      [cdmItalicIconPath]="'../assets/icons/italic-icon.svg'"
+      [cdmHeadingIcons]="[
+        '../assets/icons/h1-icon.svg',
+        '../assets/icons/h2-icon.svg',
+        '../assets/icons/h3-icon.svg'
+      ]"
+      [cdmOrderedListIconPath]="'../assets/icons/ordered-list-icon.svg'"
     ></cdm-tiptap-editor>
     <div style="color: red" *ngIf="content.invalid">Invalid!</div>
   `,

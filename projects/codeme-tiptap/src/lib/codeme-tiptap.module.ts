@@ -10,17 +10,14 @@ import {
   CdmBulletListDirective,
   CdmCodeDirective,
   CdmHeadingDirective,
-  CdmLinkDirective,
   CdmItalicDirective,
   CdmBoldDirective,
   CdmOrderedListDirective,
-  CdmVideoDirective,
   CdmGoForwardDirective,
   CdmGoBackDirective,
 } from './editor-feature';
 import { CdmParagraphDirective } from './editor-feature';
 import { PortalModule } from '@angular/cdk/portal';
-import { CdmTableDirective } from './editor-feature/features/cdm-table.directive';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -47,18 +44,15 @@ import { BrowserModule } from '@angular/platform-browser';
     PortalModule,
     CdmHeadingDirective,
     CdmParagraphDirective,
-    CdmTableDirective,
     NzModalModule,
     NzMessageModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     CdmCodeDirective,
-    CdmLinkDirective,
     CdmBoldDirective,
     CdmItalicDirective,
     CdmBulletListDirective,
     CdmOrderedListDirective,
-    CdmVideoDirective,
     CdmGoForwardDirective,
     CdmGoBackDirective,
   ],
@@ -66,14 +60,11 @@ import { BrowserModule } from '@angular/platform-browser';
     CodemeTiptapComponent,
     CdmHeadingDirective,
     CdmParagraphDirective,
-    CdmTableDirective,
     CdmCodeDirective,
-    CdmLinkDirective,
     CdmBoldDirective,
     CdmItalicDirective,
     CdmBulletListDirective,
     CdmOrderedListDirective,
-    CdmVideoDirective,
     CdmGoForwardDirective,
     CdmGoBackDirective,
   ],

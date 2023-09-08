@@ -1,29 +1,15 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Directive,
-  EventEmitter,
-  Input,
-  Output,
-  inject,
-  Renderer2,
-  ElementRef,
-} from '@angular/core';
-import { EDITOR_FEATURE, EditorFeature } from '../editor-feature';
-import { BehaviorSubject, take } from 'rxjs';
-import Table, { TableOptions } from '@tiptap/extension-table';
-import TableRow, { TableRowOptions } from '@tiptap/extension-table-row';
-import TableCell, { TableCellOptions } from '@tiptap/extension-table-cell';
-import TableHeader, {
-  TableHeaderOptions,
-} from '@tiptap/extension-table-header';
-import { Gapcursor } from '@tiptap/extension-gapcursor';
-import { EditorService } from '../../editor.service';
 import { ComponentPortal } from '@angular/cdk/portal';
+import { Directive, Input, Component, ChangeDetectionStrategy, inject, Output, EventEmitter } from '@angular/core';
+import { TableOptions } from '@tiptap/extension-table';
+import { TableCellOptions } from '@tiptap/extension-table-cell';
+import { TableHeaderOptions } from '@tiptap/extension-table-header';
+import { TableRowOptions } from '@tiptap/extension-table-row';
+import { EDITOR_FEATURE, EditorFeature, EditorService } from 'codeme-tiptap';
+import { TableModalComponent } from 'projects/codeme-tiptap/src/lib/editor-feature/modals/table-modal.component'
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { TableModalComponent } from '../modals/table-modal.component';
-import { Editor, Node as ProsemirrorNode } from '@tiptap/core';
+import { BehaviorSubject } from 'rxjs';
+
 
 //? Combining Table Options Because We only cant pass more than 2
 export interface CombinedTableOptions

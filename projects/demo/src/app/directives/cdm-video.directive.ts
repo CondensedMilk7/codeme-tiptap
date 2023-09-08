@@ -9,15 +9,14 @@ import {
   Renderer2,
   ElementRef,
 } from '@angular/core';
-import { EDITOR_FEATURE, EditorFeature } from '../editor-feature';
 import { BehaviorSubject, take } from 'rxjs';
 import { Gapcursor } from '@tiptap/extension-gapcursor';
-import { EditorService } from '../../editor.service';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import Youtube, { YoutubeOptions } from '@tiptap/extension-youtube';
-import { VideoModalComponent } from '../modals/video-modal.component';
+import { EDITOR_FEATURE, EditorFeature, EditorService } from 'codeme-tiptap';
+import { VideoModalComponent } from 'projects/codeme-tiptap/src/lib/editor-feature/modals/video-modal.component';
 
 @Directive({
   standalone: true,

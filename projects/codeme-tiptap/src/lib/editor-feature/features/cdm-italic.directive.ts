@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 import { EditorService } from '../../editor.service';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Italic, ItalicOptions } from '@tiptap/extension-italic';
+import { CommonModule } from '@angular/common';
 
 @Directive({
   standalone: true,
@@ -28,6 +29,10 @@ export class CdmItalicDirective implements EditorFeature<ItalicOptions> {
     this.config.next(config || null);
   }
 
+  @Input() set cdmItalicIconPath(path: string) {
+    this.iconPath.next(path);
+  }
+  iconPath = new BehaviorSubject<string | null>(null);
   enabled = new BehaviorSubject(false);
   config = new BehaviorSubject<Partial<ItalicOptions> | null>(null);
   button = new ComponentPortal(CdmItalicButton);
@@ -37,14 +42,25 @@ export class CdmItalicDirective implements EditorFeature<ItalicOptions> {
 }
 
 @Component({
+  imports: [CommonModule],
   selector: 'cdm-italic-button',
-  template: ` <button (click)="onClick()">Italic</button> `,
+  template: ` <button (click)="onClick()">
+    <img
+      *ngIf="iconPath$ | async; else textItalic"
+      [src]="iconPath$ | async"
+      alt="Italic"
+    />
+    <ng-template #textItalic>Code</ng-template>
+  </button>`,
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CdmItalicButton {
   editorService = inject(EditorService);
-
+  iconPath$: BehaviorSubject<string | null>;
+  constructor(private CdmItalicDirective: CdmItalicDirective) {
+    this.iconPath$ = this.CdmItalicDirective.iconPath;
+  }
   onClick() {
     this.editorService.exec((editor) =>
       editor.chain().focus().toggleItalic().run()

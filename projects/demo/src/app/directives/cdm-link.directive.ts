@@ -6,14 +6,14 @@ import {
   Input,
   inject,
 } from '@angular/core';
-import { EDITOR_FEATURE, EditorFeature } from '../editor-feature';
 import { BehaviorSubject } from 'rxjs';
-import { EditorService } from '../../editor.service';
 import { ComponentPortal } from '@angular/cdk/portal';
 import Link, { LinkOptions } from '@tiptap/extension-link';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { LinkModalComponent } from '../modals/link-modal.component';
+import { EDITOR_FEATURE, EditorFeature, EditorService } from 'codeme-tiptap';
+import { LinkModalComponent } from 'projects/codeme-tiptap/src/lib/editor-feature/modals/link-modal.component';
+import { CommonModule } from '@angular/common';
 
 @Directive({
   standalone: true,
@@ -32,6 +32,11 @@ export class CdmLinkDirective implements EditorFeature<LinkOptions> {
     this.config.next(config || null);
   }
 
+  @Input() set cdmLinkIconPath(path: string) {
+    this.iconPath.next(path);
+  }
+  iconPath = new BehaviorSubject<string | null>(null);
+
   enabled = new BehaviorSubject(false);
   config = new BehaviorSubject<Partial<LinkOptions> | null>(null);
   button = new ComponentPortal(CdmLinkButton);
@@ -41,6 +46,7 @@ export class CdmLinkDirective implements EditorFeature<LinkOptions> {
 }
 
 @Component({
+  imports: [CommonModule],
   selector: 'cdm-link-button',
   template: ` <button (click)="onClick()">Link</button> `,
   standalone: true,
