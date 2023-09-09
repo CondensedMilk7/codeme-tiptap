@@ -10,13 +10,13 @@ import {
   CdmBulletListDirective,
   CdmGoForwardDirective,
   CdmGoBackDirective,
+  EditorService,
 } from 'codeme-tiptap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CdmImageDirective } from './image/cdm-image.directive';
 
 import { TableClickDirective } from './table-click/cdm-table-click.directive';
 import { CommonModule } from '@angular/common';
-import { LowlightService } from './lowlight-register.service';
 import { CdmLinkDirective } from 'projects/demo/src/app/directives/cdm-link.directive';
 import { CdmTableDirective } from 'projects/demo/src/app/directives/cdm-table.directive';
 import { CdmVideoDirective } from 'projects/demo/src/app/directives/cdm-video.directive';
@@ -38,7 +38,7 @@ import { CdmVideoDirective } from 'projects/demo/src/app/directives/cdm-video.di
     CdmLinkDirective,
     CdmTableDirective,
   ],
-  providers: [LowlightService],
+  providers: [EditorService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

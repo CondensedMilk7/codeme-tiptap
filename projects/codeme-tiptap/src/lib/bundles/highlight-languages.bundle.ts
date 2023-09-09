@@ -3,18 +3,19 @@ import javascript from 'highlight.js/lib/languages/javascript';
 import html from 'highlight.js/lib/languages/xml';
 import css from 'highlight.js/lib/languages/css';
 import typescript from 'highlight.js/lib/languages/typescript';
-
+import python from 'highlight.js/lib/languages/python';
 export const registerHighlightLanguages = (config: Record<string, any>) => {
-  if (config['javascript']) {
-    lowlight.registerLanguage('javascript', javascript);
-  }
-  if (config['html']) {
-    lowlight.registerLanguage('html', html);
-  }
-  if (config['css']) {
-    lowlight.registerLanguage('css', css);
-  }
-  if (config['typescript']) {
-    lowlight.registerLanguage('typescript', typescript);
-  }
+  const languageMap = {
+    javascript: javascript,
+    html: html,
+    css: css,
+    typescript: typescript,
+    python: python,
+  } as Record<string, any>;
+
+  Object.keys(languageMap).forEach((lang) => {
+    if (config[lang]) {
+      lowlight.registerLanguage(lang, languageMap[lang]);
+    }
+  });
 };

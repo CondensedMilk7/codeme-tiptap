@@ -13,23 +13,19 @@ import { EditorService } from 'projects/codeme-tiptap/src/public-api';
 @Component({
   selector: 'app-root',
   template: `
-    <button (click)="paragraphEnabled = !paragraphEnabled">
-      Toggle Paragraph
-    </button>
-    <ul>
-      <li>Paragraph: {{ paragraphEnabled }}</li>
-    </ul>
     <cdm-tiptap-editor
       [formControl]="content"
+      tableClick
       [cdmHeading]="{ levels: [1, 2, 3] }"
       [cdmParagraph]="paragraphEnabled ? '' : false"
       [cdmTable]="{ resizable: true }"
       [cdmCode]="{ lowlight, languageClassPrefix: 'language-', HTMLAttributes: { class: 'code-block' } }"
       [cdmLanguageConfig]="{
-        javascript: false,
+        javascript: true,
         html: true,
         css: true,
-        typescript: true
+        typescript: true,
+        python: true
       }"
       [cdmBold]="{}"
       [cdmItalic]="{}"
@@ -37,8 +33,6 @@ import { EditorService } from 'projects/codeme-tiptap/src/public-api';
       [cdmOrderedList]="{}"
       [cdmVideo]="{}"
       [cdmLink]="{ openOnClick: true, HTMLAttributes: { target: '_blank' } }"
-      tableClick
-      (tableClicked)="onTableClicked()"
       [cdmBlockquote]="{}"
       [cdmUndo]="{}"
       [cdmRedo]="{}"
@@ -68,7 +62,6 @@ import { EditorService } from 'projects/codeme-tiptap/src/public-api';
 export class AppComponent implements OnInit {
   paragraphEnabled = false;
   content = new FormControl('initial value here', [Validators.required]);
-  //? getting lowlight
   lowlight = lowlight;
   constructor(private overlay: Overlay) {}
 
@@ -76,29 +69,5 @@ export class AppComponent implements OnInit {
     this.content.valueChanges.subscribe((val) =>
       console.log(this.content.valid)
     );
-  }
-
-  onTableClicked() {
-    const positionStrategy = this.overlay
-      .position()
-      .global()
-      .centerHorizontally()
-      .centerVertically();
-
-    const overlayConfig = new OverlayConfig({
-      hasBackdrop: false,
-      backdropClass: 'cdk-overlay-transparent-backdrop',
-      positionStrategy,
-      scrollStrategy: new NoopScrollStrategy(),
-    });
-
-    const overlayRef = this.overlay.create(overlayConfig);
-
-    overlayRef.backdropClick().subscribe((event) => {
-      const clickedElement = event.target as HTMLElement;
-      if (!overlayRef.overlayElement.contains(clickedElement)) {
-        overlayRef.detach();
-      }
-    });
   }
 }

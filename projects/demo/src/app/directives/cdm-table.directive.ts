@@ -94,7 +94,6 @@ export class CdmTableDirective implements EditorFeature<CombinedTableOptions> {
 })
 export class CdmTableButton {
   editorService = inject(EditorService);
-  @Output() tableClicked: EventEmitter<void> = new EventEmitter<void>();
   iconPath$: BehaviorSubject<string | null>;
   constructor(
     private modalService: NzModalService,
