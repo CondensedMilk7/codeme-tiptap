@@ -1,21 +1,32 @@
 import { lowlight } from 'lowlight/lib/core';
-import javascript from 'highlight.js/lib/languages/javascript';
-import html from 'highlight.js/lib/languages/xml';
-import css from 'highlight.js/lib/languages/css';
-import typescript from 'highlight.js/lib/languages/typescript';
-import python from 'highlight.js/lib/languages/python';
-export const registerHighlightLanguages = (config: Record<string, any>) => {
-  const languageMap = {
-    javascript: javascript,
-    html: html,
-    css: css,
-    typescript: typescript,
-    python: python,
-  } as Record<string, any>;
+
+export const registerHighlightLanguages = async (
+  config: Record<string, any>
+) => {
+  const languageMap: Record<string, Promise<any>> = {
+    javascript: import('highlight.js/lib/languages/javascript'),
+    html: import('highlight.js/lib/languages/xml'),
+    css: import('highlight.js/lib/languages/css'),
+    typescript: import('highlight.js/lib/languages/typescript'),
+    python: import('highlight.js/lib/languages/python'),
+  };
+
+  const promises: Promise<void>[] = [];
 
   Object.keys(languageMap).forEach((lang) => {
     if (config[lang]) {
-      lowlight.registerLanguage(lang, languageMap[lang]);
+      const promise = languageMap[lang]
+        .then((importedLangModule) => {
+          lowlight.registerLanguage(lang, importedLangModule.default);
+          console.log('registered language', lowlight.listLanguages());
+        })
+        .catch((error) => {
+          console.error(`Error registering ${lang}`, error);
+        });
+
+      promises.push(promise);
     }
   });
+
+  await Promise.all(promises);
 };

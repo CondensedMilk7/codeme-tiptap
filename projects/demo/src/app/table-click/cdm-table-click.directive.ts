@@ -1,15 +1,14 @@
 import {
   Directive,
   ElementRef,
+  EventEmitter,
   HostListener,
   Output,
-  EventEmitter,
-  Injector,
 } from '@angular/core';
-import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
+import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { TableOverlayComponent } from 'projects/codeme-tiptap/src/lib/editor-feature/modals/table-overlay.component';
 import { EditorService } from 'codeme-tiptap';
+import { ComponentPortal } from '@angular/cdk/portal';
 
 @Directive({
   selector: '[tableClick]',
@@ -18,7 +17,37 @@ export class TableClickDirective {
   @Output() tableClicked: EventEmitter<void> = new EventEmitter<void>();
   private overlayRef: OverlayRef | null = null;
 
-  insertRow(): void {
+  constructor(
+    private el: ElementRef,
+    private overlay: Overlay,
+    private editorService: EditorService
+  ) {}
+
+  getCallbackMap() {
+    return {
+      deleteTable: this.deleteTable.bind(this),
+      addRowAfter: this.addRowAfter.bind(this),
+      deleteRow: this.deleteRow.bind(this),
+      addColumnAfter: this.addColumnAfter.bind(this),
+      deleteColumn: this.deleteColumn.bind(this),
+      mergeCells: this.mergeCells.bind(this),
+      splitCell: this.splitCell.bind(this),
+    };
+  }
+
+  // TODO: Move These Somewhere Else
+  // TODO: Maybe Refactor To dont use callbacks
+  deleteTable(): void {
+    if (this.editorService.editor) {
+      this.editorService.exec((editor: any) => {
+        editor.chain().focus().deleteTable().run();
+      });
+    } else {
+      alert('No editor found');
+    }
+  }
+
+  addRowAfter(): void {
     if (this.editorService.editor) {
       this.editorService.exec((editor: any) => {
         editor.chain().focus().addRowAfter().run();
@@ -27,12 +56,56 @@ export class TableClickDirective {
       alert('No editor found');
     }
   }
-  constructor(
-    private el: ElementRef,
-    private overlay: Overlay,
-    private injector: Injector,
-    private editorService: EditorService
-  ) {}
+
+  deleteRow(): void {
+    if (this.editorService.editor) {
+      this.editorService.exec((editor: any) => {
+        editor.chain().focus().deleteRow().run();
+      });
+    } else {
+      alert('No editor found');
+    }
+  }
+
+  addColumnAfter(): void {
+    if (this.editorService.editor) {
+      this.editorService.exec((editor: any) => {
+        editor.chain().focus().addColumnAfter().run();
+      });
+    } else {
+      alert('No editor found');
+    }
+  }
+
+  deleteColumn(): void {
+    if (this.editorService.editor) {
+      this.editorService.exec((editor: any) => {
+        editor.chain().focus().deleteColumn().run();
+      });
+    } else {
+      alert('No editor found');
+    }
+  }
+
+  mergeCells(): void {
+    if (this.editorService.editor) {
+      this.editorService.exec((editor: any) => {
+        editor.chain().focus().mergeCells().run();
+      });
+    } else {
+      alert('No editor found');
+    }
+  }
+
+  splitCell(): void {
+    if (this.editorService.editor) {
+      this.editorService.exec((editor: any) => {
+        editor.chain().focus().splitCell().run();
+      });
+    } else {
+      alert('No editor found');
+    }
+  }
 
   @HostListener('document:click', ['$event'])
   handleClick(event: Event) {
@@ -43,7 +116,7 @@ export class TableClickDirective {
       while (currentEl && currentEl !== this.el.nativeElement) {
         if (currentEl.tagName === 'TD' || currentEl.tagName === 'TABLE') {
           this.tableClicked.emit();
-          this.showOverlay(currentEl, this.editorService);
+          this.showOverlay(currentEl);
           break;
         }
         currentEl = currentEl.parentElement;
@@ -51,15 +124,7 @@ export class TableClickDirective {
     }
   }
 
-  private showOverlay(
-    element: HTMLElement,
-    editorService: EditorService
-  ): void {
-    if (this.editorService.editor) {
-      alert('Editor Found');
-    } else {
-      alert('No Editor Found');
-    }
+  private showOverlay(element: HTMLElement): void {
     const positionStrategy = this.overlay
       .position()
       .flexibleConnectedTo(element)
@@ -77,26 +142,13 @@ export class TableClickDirective {
 
     this.overlayRef = this.overlay.create(overlayConfig);
 
-    const overlayComponentPortal = new ComponentPortal(
-      TableOverlayComponent,
-      null,
-      this.createInjector(editorService)
-    );
-
+    const overlayComponentPortal = new ComponentPortal(TableOverlayComponent);
     const component = this.overlayRef.attach(overlayComponentPortal);
-    component.instance.callback = this.insertRow.bind(this);
+    component.instance.editorService = this.editorService as any;
+    component.instance.callbackMap = this.getCallbackMap();
+
     this.overlayRef.backdropClick().subscribe(() => {
       this.overlayRef?.dispose();
-    });
-  }
-
-  private createInjector(editorService: EditorService): Injector {
-    return Injector.create({
-      providers: [
-        { provide: 'overlayRef', useValue: this.overlayRef },
-        { provide: EditorService, useValue: editorService },
-      ],
-      parent: this.injector,
     });
   }
 }
