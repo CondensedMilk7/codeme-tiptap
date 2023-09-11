@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class MarkStylesService {
   }
 
   // Function to get all hex parameters
-  getAllHexParameters(): { [key: string]: string } {
-    return this.markStyles;
+  getAllHexParameters(): Observable<{ [key: string]: string }> {
+    return of(this.markStyles);
   }
 }

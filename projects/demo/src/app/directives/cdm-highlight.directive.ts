@@ -32,6 +32,10 @@ export class CdmHighLightDirective implements EditorFeature<HighlightOptions> {
   @Input() set cdmHiglightIconPath(path: string) {
     this.iconPath.next(path);
   }
+
+  @Input() mark1Color: string | null = '#ff0000'; // Default Red
+  @Input() mark2Color: string | null = '#00ff00'; // Default Green
+  @Input() mark3Color: string | null = '#0000ff'; // Default Blue
   iconPath = new BehaviorSubject<string | null>(null);
 
   enabled = new BehaviorSubject(false);
@@ -55,7 +59,7 @@ export class CdmHighLightDirective implements EditorFeature<HighlightOptions> {
   imports: [CommonModule],
   selector: 'cdm-higlight-button',
   template: `
-    <button (click)="mark1()">
+    <button (click)="mark1()" [style.backgroundColor]="mark1Color">
       <img
         *ngIf="iconPath$ | async; else textHighlight"
         [src]="iconPath$ | async"
@@ -63,7 +67,7 @@ export class CdmHighLightDirective implements EditorFeature<HighlightOptions> {
       <ng-template #textHighlight>Highlight1</ng-template>
     </button>
 
-    <button (click)="mark2()">
+    <button (click)="mark2()" [style.backgroundColor]="mark2Color">
       <img
         *ngIf="iconPath$ | async; else textHighlight"
         [src]="iconPath$ | async"
@@ -71,7 +75,7 @@ export class CdmHighLightDirective implements EditorFeature<HighlightOptions> {
       <ng-template #textHighlight>Highlight2</ng-template>
     </button>
 
-    <button (click)="mark3()">
+    <button (click)="mark3()" [style.backgroundColor]="mark3Color">
       <img
         *ngIf="iconPath$ | async; else textHighlight"
         [src]="iconPath$ | async"
@@ -86,23 +90,43 @@ export class CdmHighLightButton {
   editorService = inject(EditorService);
   iconPath$: BehaviorSubject<string | null>;
 
-  constructor(private CdmHighLightDirective: CdmHighLightDirective) {
-    this.iconPath$ = this.CdmHighLightDirective.iconPath;
+  mark1Color: string | null;
+  mark2Color: string | null;
+  mark3Color: string | null;
+
+  constructor(private cdmHighLightDirective: CdmHighLightDirective) {
+    this.iconPath$ = this.cdmHighLightDirective.iconPath;
+    this.mark1Color = this.cdmHighLightDirective.mark1Color;
+    this.mark2Color = this.cdmHighLightDirective.mark2Color;
+    this.mark3Color = this.cdmHighLightDirective.mark3Color;
   }
 
+  //? we can define any marks we want here just pass the class
   mark1() {
-    this.execMark('mark1');
+    if (this.mark1Color) {
+      this.execMark('mark1', this.mark1Color);
+    } else {
+      console.warn('mark1Color is null. Cannot execute mark.');
+    }
   }
 
   mark2() {
-    this.execMark('mark2');
+    if (this.mark2Color) {
+      this.execMark('mark2', this.mark2Color);
+    } else {
+      console.warn('mark2Color is null. Cannot execute mark.');
+    }
   }
 
   mark3() {
-    this.execMark('mark3');
+    if (this.mark3Color) {
+      this.execMark('mark3', this.mark3Color);
+    } else {
+      console.warn('mark3Color is null. Cannot execute mark.');
+    }
   }
 
-  private execMark(markClass: string) {
+  private execMark(markClass: string, markColor: string) {
     this.editorService.exec((editor) => {
       editor
         .chain()

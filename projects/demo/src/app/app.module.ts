@@ -10,16 +10,16 @@ import {
   CdmBulletListDirective,
   CdmGoForwardDirective,
   CdmGoBackDirective,
-  EditorService,
+  MarkStylesService,
 } from 'codeme-tiptap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CdmImageDirective } from './image/cdm-image.directive';
 
 import { TableClickDirective } from './table-click/cdm-table-click.directive';
 import { CommonModule } from '@angular/common';
-import { CdmLinkDirective } from 'projects/demo/src/app/directives/cdm-link.directive';
-import { CdmTableDirective } from 'projects/demo/src/app/directives/cdm-table.directive';
-import { CdmVideoDirective } from 'projects/demo/src/app/directives/cdm-video.directive';
+import { CdmLinkDirective } from './directives/cdm-link.directive';
+import { CdmTableDirective } from './directives/cdm-table.directive';
+import { CdmVideoDirective } from './directives/cdm-video.directive';
 import { CdmHighLightDirective } from './directives/cdm-highlight.directive';
 @NgModule({
   declarations: [AppComponent, TableClickDirective],
