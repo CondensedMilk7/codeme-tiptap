@@ -20,6 +20,7 @@ import { CommonModule } from '@angular/common';
 import { CdmLinkDirective } from 'projects/demo/src/app/directives/cdm-link.directive';
 import { CdmTableDirective } from 'projects/demo/src/app/directives/cdm-table.directive';
 import { CdmVideoDirective } from 'projects/demo/src/app/directives/cdm-video.directive';
+import { CdmHighLightDirective } from './directives/cdm-highlight.directive';
 @NgModule({
   declarations: [AppComponent, TableClickDirective],
   imports: [
@@ -37,8 +38,9 @@ import { CdmVideoDirective } from 'projects/demo/src/app/directives/cdm-video.di
     CdmGoBackDirective,
     CdmLinkDirective,
     CdmTableDirective,
+    CdmHighLightDirective,
   ],
-  providers: [EditorService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

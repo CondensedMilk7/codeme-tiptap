@@ -77,3 +77,12 @@
   padding: 12px;
   color: #f9f9f9;
 }
+
+
+/* Testing Purposes */
+.mark1{
+  color: #f92672;
+  border-radius: 6px;
+  padding: 2px 4px;
+  background-color: #272822;
+}

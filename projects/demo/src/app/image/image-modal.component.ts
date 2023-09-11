@@ -146,7 +146,7 @@ export class ImageModalComponent {
   resizeSettings = { width: this.previewWidth };
   imageChangedEvent: any = '';
   croppedImage: any = '';
-  showCropper = true; // Added this line
+  showCropper = true;
   @Input() image!: string; // Change the name of the input property to match
   @Input() caption: string = '';
 
