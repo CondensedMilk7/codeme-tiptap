@@ -86,3 +86,12 @@
   padding: 2px 4px;
   background-color: #272822;
 }
+
+.ProseMirror blockquote {
+  border-left: 4px solid #eee;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 10px;
+  color: #d9ff00;
+  font-style: italic;
+}

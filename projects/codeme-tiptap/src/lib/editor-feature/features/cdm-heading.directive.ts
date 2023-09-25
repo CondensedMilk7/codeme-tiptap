@@ -40,9 +40,7 @@ export class CdmHeadingDirective implements EditorFeature<HeadingOptions> {
 }
 
 @Component({
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule],
   selector: 'cdm-heading-button',
   template: `
     <button (click)="onClick(1)">

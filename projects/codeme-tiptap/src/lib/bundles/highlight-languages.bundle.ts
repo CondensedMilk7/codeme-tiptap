@@ -9,6 +9,9 @@ export const registerHighlightLanguages = async (
     css: import('highlight.js/lib/languages/css'),
     typescript: import('highlight.js/lib/languages/typescript'),
     python: import('highlight.js/lib/languages/python'),
+    java: import('highlight.js/lib/languages/java'),
+    csharp: import('highlight.js/lib/languages/csharp'),
+    php: import('highlight.js/lib/languages/php'),
   };
 
   const promises: Promise<void>[] = [];

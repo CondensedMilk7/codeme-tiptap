@@ -23,7 +23,6 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EditorService } from './editor.service';
 
 @NgModule({
   declarations: [CodemeTiptapComponent, EditorToolbarComponent],
@@ -60,6 +59,6 @@ import { EditorService } from './editor.service';
     CdmGoBackDirective,
     CdmBlockquoteDirective,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }, EditorService],
+  providers: [{ provide: NZ_I18N, useValue: en_US }],
 })
 export class CodemeTiptapModule {}

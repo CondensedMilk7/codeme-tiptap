@@ -51,7 +51,8 @@ import { Observable, map } from 'rxjs';
         html: true,
         css: true,
         typescript: true,
-        python: true
+        python: true,
+        java: true
       }"
     ></cdm-tiptap-editor>
     <div style="color: red" *ngIf="content.invalid">Invalid!</div>
