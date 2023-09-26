@@ -1,7 +1,7 @@
 import { lowlight } from 'lowlight/lib/core';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MarkStylesService } from 'codeme-tiptap';
+import { CdmEndpointDirective, MarkStylesService } from 'codeme-tiptap';
 import { Observable, map } from 'rxjs';
 
 @Component({
@@ -54,7 +54,12 @@ import { Observable, map } from 'rxjs';
         python: true,
         java: true
       }"
+      [cdmEndpoint]="'https://codemelive.com/api/editor/course/assignment/163b6569-6aca-44c7-b6c0-c3a676d7f808'"
+      [data]="{ description: _dataToSend }"
+      [debounceTime]="1000"
+      [sendDatainChar]="50"
     ></cdm-tiptap-editor>
+    <button (click)="onButtonClick()">Perform Action</button>
     <div style="color: red" *ngIf="content.invalid">Invalid!</div>
   `,
   styles: [``],
@@ -62,6 +67,9 @@ import { Observable, map } from 'rxjs';
 export class AppComponent implements OnInit {
   paragraphEnabled = false;
   content = new FormControl('initial value here', [Validators.required]);
+  @ViewChild(CdmEndpointDirective) cdmDirective!: CdmEndpointDirective;
+  _dataToSend: string = '';
+
   lowlight = lowlight;
   markColorService = inject(MarkStylesService);
   markValues$!: Observable<any>;
@@ -69,10 +77,15 @@ export class AppComponent implements OnInit {
   mark2Color$!: Observable<string>;
   mark3Color$!: Observable<string>;
 
+  onButtonClick() {
+    this.cdmDirective.sendData();
+  }
   ngOnInit(): void {
-    this.content.valueChanges.subscribe((val) =>
-      console.log(this.content.valid)
-    );
+    this.content.valueChanges.subscribe((val) => {
+      if (val) {
+        this._dataToSend = val;
+      }
+    });
 
     // ? personaly i dont like this approach but it works
     this.markColorService.saveHexParameter('mark1', 'red');

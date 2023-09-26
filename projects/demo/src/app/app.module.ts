@@ -11,6 +11,7 @@ import {
   CdmGoForwardDirective,
   CdmGoBackDirective,
   MarkStylesService,
+  CdmEndpointDirective,
 } from 'codeme-tiptap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CdmImageDirective } from './image/cdm-image.directive';
@@ -39,6 +40,7 @@ import { CdmHighLightDirective } from './directives/cdm-highlight.directive';
     CdmLinkDirective,
     CdmTableDirective,
     CdmHighLightDirective,
+    CdmEndpointDirective,
   ],
   providers: [],
   bootstrap: [AppComponent],

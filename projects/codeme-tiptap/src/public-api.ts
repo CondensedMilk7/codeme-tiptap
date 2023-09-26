@@ -8,3 +8,4 @@ export * from './lib/content-styles';
 export * from './lib/editor-feature';
 export * from './lib/editor.service';
 export * from './lib/shared/mark-styles.service';
+export * from './lib/editor-feature/data-access/cdm-endpoint.directive';
