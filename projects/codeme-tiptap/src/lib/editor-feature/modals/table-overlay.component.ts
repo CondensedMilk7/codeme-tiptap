@@ -1,13 +1,17 @@
-import { Component, OnInit, HostListener, inject } from '@angular/core';
+import { Component, OnInit, HostListener, Inject, Input } from '@angular/core';
 import { EditorService } from '../../editor.service';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  imports: [CommonModule, ReactiveFormsModule],
   selector: 'table-overlay',
-  template: `<button (click)="insertRow($event)">Insert Row</button>`,
-  standalone: true,
+  template: `
+    <button (click)="invokeCallback('deleteTable')">Delete Table</button>
+    <button (click)="invokeCallback('addRowAfter')">Add Row After</button>
+    <button (click)="invokeCallback('deleteRow')">Delete Row</button>
+    <button (click)="invokeCallback('addColumnAfter')">Add Column After</button>
+    <button (click)="invokeCallback('deleteColumn')">Delete Column</button>
+    <button (click)="invokeCallback('mergeCells')">Merge Cells</button>
+    <button (click)="invokeCallback('splitCell')">Split Cell</button>
+  `,
   styles: [
     `
       button {
@@ -18,26 +22,10 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
 })
 export class TableOverlayComponent {
-  constructor(public editorService: EditorService) {}
+  @Input() editorService!: EditorService;
+  @Input() callbackMap!: Record<string, () => void>;
 
-  ngOnInit(): void {}
-
-  insertRow(event: MouseEvent) {
-    event.stopPropagation();
-    event.preventDefault();
-    console.log(this.editorService);
-    if (this.editorService.editor) {
-      this.editorService.exec((editor) => {
-        editor.chain().focus().addRowAfter().run();
-      });
-    } else {
-      console.error('no editor');
-    }
-  }
-
-  @HostListener('click', ['$event'])
-  stopPropagation(event: MouseEvent) {
-    event.stopPropagation();
-    event.preventDefault();
+  invokeCallback(action: string) {
+    this.callbackMap[action]?.();
   }
 }

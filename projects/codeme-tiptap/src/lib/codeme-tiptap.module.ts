@@ -23,6 +23,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [CodemeTiptapComponent, EditorToolbarComponent],
@@ -45,6 +46,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CdmGoForwardDirective,
     CdmGoBackDirective,
     CdmBlockquoteDirective,
+    HttpClientModule,
   ],
   exports: [
     CodemeTiptapComponent,
